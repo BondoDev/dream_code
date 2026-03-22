@@ -4,13 +4,15 @@ import "./styles/components/final-cta.scss";
 import "./styles/components/navbar.scss";
 import "./styles/components/footer.scss";
 
+const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+
 const journeySteps = [
   {
     step: "Step 1",
     title: "Questionnaire",
     description:
       "Answer 20 thoughtful questions designed to reveal your core archetypes, natural strengths, and deeper motivations.",
-    image: "/images/home_images/questionnaire_card_img.png",
+    image: withBase("images/home_images/questionnaire_card_img.png"),
     imageAlt: "Questionnaire illustration",
     ctaLabel: "Start Questionnaire",
     ctaHref: "#questionnaire",
@@ -20,7 +22,7 @@ const journeySteps = [
     title: "Personal Analysis",
     description:
       "Your talents, blocks, and potential life directions are analyzed through reflective systems that help you better understand yourself.",
-    image: "/images/home_images/personal_analysis%20card_img.png",
+    image: withBase("images/home_images/personal_analysis%20card_img.png"),
     imageAlt: "Personal analysis illustration",
     ctaLabel: "View Analysis Details",
     ctaHref: "#analysis-details",
@@ -30,7 +32,7 @@ const journeySteps = [
     title: "Learning Modules",
     description:
       "Five guided modules teach you how the mind works, how to build supportive habits, develop creativity, and transform dreams into goals.",
-    image: "/images/home_images/learning_modules_card_img.png",
+    image: withBase("images/home_images/learning_modules_card_img.png"),
     imageAlt: "Learning modules illustration",
     ctaLabel: "Explore Modules",
     ctaHref: "#modules",
@@ -40,7 +42,7 @@ const journeySteps = [
     title: "Nature Retreat",
     description:
       "A one-day retreat in nature with creative practices, reflection exercises, and a celebration of your personal journey.",
-    image: "/images/home_images/nature_retreat_card_img.png",
+    image: withBase("images/home_images/nature_retreat_card_img.png"),
     imageAlt: "Nature retreat illustration",
     ctaLabel: "Learn About Retreat",
     ctaHref: "#retreat",
@@ -67,17 +69,13 @@ function App() {
               Contact
             </button>
             <button className="nav-button" type="button">
-              Start
+              Start Your Path
             </button>
           </div>
         </div>
       </nav>
 
-      <section
-        className="home-hero"
-        id="top"
-        aria-labelledby="home-hero-title"
-      >
+      <section className="home-hero" id="top" aria-labelledby="home-hero-title">
         <div className="home-hero__inner">
           <div className="home-hero__content">
             <span className="home-hero__eyebrow">Dream Code Map</span>
@@ -98,7 +96,7 @@ function App() {
             <div className="home-hero__image-wrap">
               <img
                 className="home-hero__image"
-                src="/images/home_images/home_section_img.png"
+                src={withBase("images/home_images/home_section_img.png")}
                 alt="Person standing at the beginning of a path, symbolizing personal discovery and growth."
               />
             </div>
@@ -132,7 +130,9 @@ function App() {
                 <div className="journey-card__content">
                   <p className="journey-card__step">{item.step}</p>
                   <h3 className="journey-card__title">{item.title}</h3>
-                  <p className="journey-card__description">{item.description}</p>
+                  <p className="journey-card__description">
+                    {item.description}
+                  </p>
                   <a className="journey-card__button" href={item.ctaHref}>
                     {item.ctaLabel}
                   </a>
@@ -155,7 +155,7 @@ function App() {
           <div className="final-cta__media">
             <img
               className="final-cta__image"
-              src="/images/home_images/home_section_img.png"
+              src={withBase("images/home_images/home_section_img.png")}
               alt="Founder of Dream Code"
             />
           </div>
@@ -201,7 +201,9 @@ function App() {
               Privacy
             </button>
           </div>
-          <div className="footer-copy">&copy; 2026 Dream Code. All rights reserved.</div>
+          <div className="footer-copy">
+            &copy; 2026 Dream Code. All rights reserved.
+          </div>
         </div>
       </footer>
     </main>
