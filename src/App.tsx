@@ -52,17 +52,23 @@ function App() {
     <main className="page-shell">
       <nav className="navbar" aria-label="Main navigation">
         <div className="nav-container">
-          <a className="logo" href="#top">
+          <button className="logo" type="button">
             Dream Code
-          </a>
+          </button>
 
           <div className="nav-links">
-            <a href="#about">About</a>
-            <a href="#steps">Journey</a>
-            <a href="#about">Start</a>
-            <a className="nav-button" href="#contact">
+            <button className="nav-link" type="button">
+              About
+            </button>
+            <button className="nav-link" type="button">
+              Journey
+            </button>
+            <button className="nav-link" type="button">
               Contact
-            </a>
+            </button>
+            <button className="nav-button" type="button">
+              Start
+            </button>
           </div>
         </div>
       </nav>
@@ -185,9 +191,15 @@ function App() {
         <div className="footer-container">
           <div className="footer-brand">Dream Code</div>
           <div className="footer-links">
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-            <a href="#about">Privacy</a>
+            <button className="footer-link" type="button">
+              About
+            </button>
+            <button className="footer-link" type="button">
+              Contact
+            </button>
+            <button className="footer-link" type="button">
+              Privacy
+            </button>
           </div>
           <div className="footer-copy">&copy; 2026 Dream Code. All rights reserved.</div>
         </div>

@@ -23,9 +23,18 @@
   margin-top: 18px;
 }
 
-.footer-links a {
+.footer-link {
+  border: 0;
+  padding: 0;
+  background: transparent;
   color: var(--color-text);
-  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.footer-link:focus-visible {
+  outline: 3px solid rgba(111, 143, 114, 0.18);
+  outline-offset: 4px;
 }
 
 .footer-copy {
