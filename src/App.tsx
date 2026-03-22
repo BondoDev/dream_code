@@ -60,8 +60,8 @@ function App() {
             <a href="#about">About</a>
             <a href="#steps">Journey</a>
             <a href="#about">Start</a>
-            <a className="nav-button" href="#questionnaire">
-              Start Questionnaire
+            <a className="nav-button" href="#contact">
+              Contact
             </a>
           </div>
         </div>
@@ -186,7 +186,7 @@ function App() {
           <div className="footer-brand">Dream Code</div>
           <div className="footer-links">
             <a href="#about">About</a>
-            <a href="#steps">Contact</a>
+            <a href="#contact">Contact</a>
             <a href="#about">Privacy</a>
           </div>
           <div className="footer-copy">&copy; 2026 Dream Code. All rights reserved.</div>
