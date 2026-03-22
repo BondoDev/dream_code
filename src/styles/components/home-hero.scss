@@ -1,0 +1,139 @@
+.home-hero {
+  padding: 60px 24px 72px;
+}
+
+.home-hero__inner {
+  width: min(100%, var(--container-width));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.home-hero__content {
+  max-width: 580px;
+}
+
+.home-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: rgba(111, 143, 114, 0.12);
+  color: var(--color-primary-dark);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.home-hero__title {
+  margin: 22px 0 24px;
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 5vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.home-hero__description {
+  max-width: 540px;
+  margin: 0 0 32px;
+  font-size: 1.08rem;
+  color: var(--color-text-muted);
+}
+
+.home-hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0 28px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fdfcf8;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.home-hero__button:hover,
+.home-hero__button:focus-visible {
+  background: var(--color-primary-dark);
+}
+
+.home-hero__button:focus-visible {
+  outline: 3px solid rgba(111, 143, 114, 0.22);
+  outline-offset: 4px;
+}
+
+.home-hero__button:hover {
+  transform: translateY(-1px);
+}
+
+.home-hero__media {
+  position: relative;
+}
+
+.home-hero__image-wrap {
+  position: relative;
+  border-radius: 32px;
+  overflow: hidden;
+}
+
+.home-hero__image-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 20px auto auto -24px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  filter: blur(4px);
+}
+
+.home-hero__image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .home-hero {
+    padding: 96px 20px 64px;
+  }
+
+  .home-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .home-hero__content {
+    max-width: none;
+  }
+
+  .home-hero__title {
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-hero {
+    padding: 84px 16px 56px;
+  }
+
+  .home-hero__title {
+    font-size: clamp(2.5rem, 12vw, 3.2rem);
+  }
+
+  .home-hero__description {
+    font-size: 1rem;
+  }
+
+  .home-hero__image-wrap {
+    border-radius: 24px;
+  }
+}

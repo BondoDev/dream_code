@@ -1,0 +1,70 @@
+:root {
+  --color-background: #f7f5f2;
+  --color-surface: #fffdf9;
+  --color-surface-soft: #f3ece2;
+  --color-primary: #6f8f72;
+  --color-primary-dark: #5d7a60;
+  --color-text: #2f2f2f;
+  --color-text-muted: #5f625d;
+  --color-border: rgba(111, 143, 114, 0.18);
+  --shadow-soft: 0 18px 40px rgba(111, 143, 114, 0.08);
+  --font-body: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --container-width: 1160px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top left, rgba(233, 226, 210, 0.65), transparent 30%),
+    linear-gradient(180deg, #fbf9f5 0%, var(--color-background) 100%);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.page-shell {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
