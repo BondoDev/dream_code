@@ -62,9 +62,71 @@ select {
   min-height: 100vh;
 }
 
+.scroll-toggle {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(47, 47, 47, 0.88);
+  box-shadow: 0 16px 32px rgba(47, 47, 47, 0.18);
+  color: #fffdf9;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.scroll-toggle:hover,
+.scroll-toggle:focus-visible {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(93, 122, 96, 0.22);
+}
+
+.scroll-toggle:focus-visible {
+  outline: 3px solid rgba(111, 143, 114, 0.22);
+  outline-offset: 4px;
+}
+
+.scroll-toggle__chevrons {
+  display: grid;
+  gap: 4px;
+  transition: transform 0.2s ease;
+}
+
+.scroll-toggle__chevrons--up {
+  transform: rotate(180deg);
+}
+
+.scroll-toggle__chevrons span {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
 h1,
 h2,
 h3,
 p {
   margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .scroll-toggle {
+    right: 16px;
+    bottom: 16px;
+    width: 54px;
+    height: 54px;
+  }
 }

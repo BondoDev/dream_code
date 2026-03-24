@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import "./styles/components/home-hero.scss";
 import "./styles/components/journey-steps.scss";
 import "./styles/components/final-cta.scss";
@@ -50,6 +52,37 @@ const journeySteps = [
 ];
 
 function App() {
+  const [isPastHalfway, setIsPastHalfway] = useState(false);
+
+  useEffect(() => {
+    const updateScrollDirection = () => {
+      const scrollableHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const halfwayPoint = Math.max(scrollableHeight / 2, 0);
+      setIsPastHalfway(window.scrollY > halfwayPoint);
+    };
+
+    updateScrollDirection();
+    window.addEventListener("scroll", updateScrollDirection, { passive: true });
+    window.addEventListener("resize", updateScrollDirection);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollDirection);
+      window.removeEventListener("resize", updateScrollDirection);
+    };
+  }, []);
+
+  const handleScrollToggle = () => {
+    const scrollTarget = isPastHalfway
+      ? 0
+      : document.documentElement.scrollHeight - window.innerHeight;
+
+    window.scrollTo({
+      top: Math.max(scrollTarget, 0),
+      behavior: "smooth",
+    });
+  };
+
   return (
     <main className="page-shell">
       <nav className="navbar" aria-label="Main navigation">
@@ -77,16 +110,20 @@ function App() {
 
       <section className="home-hero" id="top" aria-labelledby="home-hero-title">
         <div className="home-hero__inner">
+          <h1 id="home-hero-title" className="home-hero__title">
+            Discover Your Natural Talents and Life Direction
+          </h1>
           <div className="home-hero__content">
-            <span className="home-hero__eyebrow">Dream Code Map</span>
-            <h1 id="home-hero-title" className="home-hero__title">
-              Discover Your Natural Talents and Life Direction
-            </h1>
             <p className="home-hero__description">
-              A guided process that helps you discover your natural strengths,
-              overcome inner blocks, and turn your dreams into a clear and
-              meaningful life direction.
+              A guided journey that helps you understand your natural
+              strengths, overcome inner blocks, and transform your dreams into
+              a clear life direction.
             </p>
+            <ul className="home-hero__highlights" aria-label="Program highlights">
+              <li>20-question discovery questionnaire</li>
+              <li>5 learning modules</li>
+              <li>Nature retreat experience</li>
+            </ul>
             <a className="home-hero__button" href="#questionnaire">
               Start Questionnaire
             </a>
@@ -206,6 +243,21 @@ function App() {
           </div>
         </div>
       </footer>
+
+      <button
+        className="scroll-toggle"
+        type="button"
+        onClick={handleScrollToggle}
+        aria-label={isPastHalfway ? "Scroll to top" : "Scroll to bottom"}
+      >
+        <span
+          className={`scroll-toggle__chevrons ${isPastHalfway ? "scroll-toggle__chevrons--up" : ""}`}
+          aria-hidden="true"
+        >
+          <span />
+          <span />
+        </span>
+      </button>
     </main>
   );
 }
