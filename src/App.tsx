@@ -110,23 +110,16 @@ function App() {
 
       <section className="home-hero" id="top" aria-labelledby="home-hero-title">
         <div className="home-hero__inner">
-          <h1 id="home-hero-title" className="home-hero__title">
-            Discover Your Natural Talents and Life Direction
-          </h1>
           <div className="home-hero__content">
+            <span className="home-hero__label">DREAM CODE MAP</span>
+            <h1 id="home-hero-title" className="home-hero__title">
+              Discover Your Natural Talent and Life Direction
+            </h1>
             <p className="home-hero__description">
-              A guided journey that helps you understand your natural
-              strengths, overcome inner blocks, and transform your dreams into
-              a clear life direction.
+              A guided process that helps you discover your natural strengths,
+              overcome inner blocks, and turn your dreams into a clear and
+              meaningful life direction.
             </p>
-            <ul className="home-hero__highlights" aria-label="Program highlights">
-              <li>20-question discovery questionnaire</li>
-              <li>5 learning modules</li>
-              <li>Nature retreat experience</li>
-            </ul>
-            <a className="home-hero__button" href="#questionnaire">
-              Start Questionnaire
-            </a>
           </div>
 
           <div className="home-hero__media">
@@ -139,16 +132,10 @@ function App() {
             </div>
           </div>
         </div>
-      </section>
 
-      <section
-        className="journey-steps"
-        id="steps"
-        aria-labelledby="journey-steps-title"
-      >
         <div className="section-shell">
           <div className="journey-steps__header">
-            <span className="journey-steps__eyebrow">Course Process</span>
+            <span className="journey-steps__eyebrow">C.T.A.</span>
             <h2 id="journey-steps-title" className="journey-steps__title">
               Your Journey in 4 Steps
             </h2>
@@ -158,71 +145,48 @@ function App() {
             </p>
           </div>
 
-          <div className="journey-steps__list">
-            {journeySteps.map((item, index) => (
-              <article
-                className={`journey-card ${index % 2 === 1 ? "journey-card--reverse" : ""}`}
-                key={item.step}
-              >
-                <div className="journey-card__content">
-                  <p className="journey-card__step">{item.step}</p>
-                  <h3 className="journey-card__title">{item.title}</h3>
-                  <p className="journey-card__description">
-                    {item.description}
-                  </p>
-                  <a className="journey-card__button" href={item.ctaHref}>
-                    {item.ctaLabel}
-                  </a>
-                </div>
-                <div className="journey-card__media">
-                  <img
-                    className="journey-card__image"
-                    src={item.image}
-                    alt={item.imageAlt}
-                  />
-                </div>
-              </article>
-            ))}
+          <div className="journey-steps__grid">
+            <div className="journey-step-card">
+              <img
+                className="journey-step-card__icon"
+                src={withBase("images/home_images/questionnaire_image.png")}
+                alt="Questionnaire"
+              />
+              <span className="journey-step-card__label">Questionnaire</span>
+            </div>
+            <div className="journey-step-card">
+              <img
+                className="journey-step-card__icon"
+                src={withBase("images/home_images/consultation_image.png")}
+                alt="Consultation"
+              />
+              <span className="journey-step-card__label">Consultation</span>
+            </div>
+            <div className="journey-step-card">
+              <img
+                className="journey-step-card__icon"
+                src={withBase("images/home_images/lectures_image.png")}
+                alt="Lectures"
+              />
+              <span className="journey-step-card__label">Lectures</span>
+            </div>
+            <div className="journey-step-card">
+              <img
+                className="journey-step-card__icon"
+                src={withBase("images/home_images/retreat_image.png")}
+                alt="Retreat"
+              />
+              <span className="journey-step-card__label">Retreat</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="final-cta" id="about" aria-labelledby="about-title">
-        <div className="final-cta__inner">
-          <div className="final-cta__media">
-            <img
-              className="final-cta__image"
-              src={withBase("images/home_images/home_section_img.png")}
-              alt="Founder of Dream Code"
-            />
-          </div>
-
-          <div className="final-cta__content">
-            <h2 id="about-title" className="final-cta__title">
-              The Story Behind Dream Code
-            </h2>
-            <p className="final-cta__description">
-              Dream Code was created from a personal journey of searching for
-              clarity and direction in life. Like many people, I had ideas,
-              dreams, and interests but struggled to understand how they could
-              come together into a meaningful path.
-            </p>
-            <p className="final-cta__description">
-              Through exploring psychology, creativity practices, and
-              self-reflection methods, I began to see patterns in how people
-              discover their natural talents and motivations.
-            </p>
-            <p className="final-cta__description">
-              Dream Code became a way to organize these insights into a
-              structured process that helps people understand themselves better
-              and move forward with confidence.
-            </p>
-            <a className="final-cta__button" href="#about">
-              Read the Full Story
-            </a>
-          </div>
-        </div>
-      </section>
+      <section
+        className="final-cta"
+        id="about"
+        aria-labelledby="about-title"
+      ></section>
 
       <footer className="footer">
         <div className="footer-container">
