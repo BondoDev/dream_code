@@ -8,49 +8,6 @@ import "./styles/components/footer.scss";
 
 const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
-const journeySteps = [
-  {
-    step: "Step 1",
-    title: "Questionnaire",
-    description:
-      "Answer 20 thoughtful questions designed to reveal your core archetypes, natural strengths, and deeper motivations.",
-    image: withBase("images/home_images/questionnaire_card_img.png"),
-    imageAlt: "Questionnaire illustration",
-    ctaLabel: "Start Questionnaire",
-    ctaHref: "#questionnaire",
-  },
-  {
-    step: "Step 2",
-    title: "Personal Analysis",
-    description:
-      "Your talents, blocks, and potential life directions are analyzed through reflective systems that help you better understand yourself.",
-    image: withBase("images/home_images/personal_analysis%20card_img.png"),
-    imageAlt: "Personal analysis illustration",
-    ctaLabel: "View Analysis Details",
-    ctaHref: "#analysis-details",
-  },
-  {
-    step: "Step 3",
-    title: "Learning Modules",
-    description:
-      "Five guided modules teach you how the mind works, how to build supportive habits, develop creativity, and transform dreams into goals.",
-    image: withBase("images/home_images/learning_modules_card_img.png"),
-    imageAlt: "Learning modules illustration",
-    ctaLabel: "Explore Modules",
-    ctaHref: "#modules",
-  },
-  {
-    step: "Step 4",
-    title: "Nature Retreat",
-    description:
-      "A one-day retreat in nature with creative practices, reflection exercises, and a celebration of your personal journey.",
-    image: withBase("images/home_images/nature_retreat_card_img.png"),
-    imageAlt: "Nature retreat illustration",
-    ctaLabel: "Learn About Retreat",
-    ctaHref: "#retreat",
-  },
-];
-
 function App() {
   const [isPastHalfway, setIsPastHalfway] = useState(false);
 
