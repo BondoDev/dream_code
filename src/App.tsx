@@ -143,7 +143,124 @@ function App() {
         className="final-cta"
         id="about"
         aria-labelledby="about-title"
-      ></section>
+      >
+        <div className="final-cta__inner">
+          <div className="final-cta__content">
+            <h2 id="about-title" className="final-cta__title">
+              DreamCodeMap - A System for Rediscovering Your Inner Direction
+            </h2>
+
+            <p className="final-cta__description">
+              DreamCodeMap was created to help people reconnect with their
+              natural direction, hidden talents, inner strengths, and forgotten
+              dreams.
+            </p>
+            <p className="final-cta__description">
+              This is not just a self-development course.
+              <br />
+              It is a space designed for deeper self-discovery, clarity,
+              creative activation, and authentic transformation.
+            </p>
+
+            <hr className="final-cta__divider" />
+
+            <h3 className="final-cta__subtitle">How It Began</h3>
+            <p className="final-cta__description">
+              This project slowly matured over many years.
+            </p>
+            <p className="final-cta__description">
+              After more than 20 years of administrative and office work, I
+              constantly felt that I was not truly in my place. I was doing
+              what was necessary - what provided stability, responsibility, and
+              security - but not what genuinely inspired me or made me feel
+              alive.
+            </p>
+            <p className="final-cta__description">
+              Although I performed my work professionally, I felt disconnected
+              from my deeper potential because it was never aligned with my true
+              interests or inner calling.
+            </p>
+            <p className="final-cta__description">
+              At a turning point in my life, I began searching for a deeper
+              understanding of myself, my purpose, and human potential. Along
+              this journey, I explored psychology, behavioral patterns,
+              creativity, astrology, numerology, and other systems as tools for
+              self-discovery and personal insight.
+            </p>
+            <p className="final-cta__description">
+              Over time, more and more people came to me for guidance. That is
+              when I realized that helping others recognize their strengths,
+              reconnect with their inspiration, and discover their hidden
+              potential was one of my natural gifts.
+            </p>
+            <p className="final-cta__description">
+              This is how DreamCodeMap was born.
+            </p>
+
+            <hr className="final-cta__divider" />
+
+            <h3 className="final-cta__subtitle">What DreamCodeMap Combines</h3>
+            <p className="final-cta__description">DreamCodeMap brings together:</p>
+            <ul className="final-cta__list">
+              <li>self-discovery questionnaires</li>
+              <li>the Dream Archetype system</li>
+              <li>psychology and habit mechanisms</li>
+              <li>creativity development practices</li>
+              <li>astrology, numerology, and Human Design tools</li>
+              <li>nature-based and embodiment practices</li>
+            </ul>
+            <p className="final-cta__description">
+              The system was designed to support growth on multiple levels
+              simultaneously:
+            </p>
+            <ul className="final-cta__list">
+              <li>physical</li>
+              <li>emotional</li>
+              <li>intellectual</li>
+              <li>creative</li>
+              <li>and inner/spiritual</li>
+            </ul>
+            <p className="final-cta__description">
+              Because meaningful transformation often begins when we start
+              seeing ourselves as a whole.
+            </p>
+
+            <hr className="final-cta__divider" />
+
+            <h3 className="final-cta__subtitle">The Vision</h3>
+            <p className="final-cta__description">
+              I believe that many people are not lacking talent or potential -
+              they simply were never given the tools, space, or guidance to
+              recognize their inner patterns and authentic direction.
+            </p>
+            <p className="final-cta__description">
+              DreamCodeMap exists to help people:
+            </p>
+            <ul className="final-cta__list">
+              <li>understand themselves more deeply</li>
+              <li>uncover their natural abilities</li>
+              <li>recognize inner blocks</li>
+              <li>activate creative energy</li>
+              <li>
+                and transform dreams into real direction and meaningful action
+              </li>
+            </ul>
+
+            <hr className="final-cta__divider" />
+
+            <h3 className="final-cta__subtitle">In the End</h3>
+            <p className="final-cta__description">
+              Sometimes people are not truly lost.
+              <br />
+              They have simply spent too much time living according to
+              expectations that were never truly theirs.
+            </p>
+            <p className="final-cta__description">
+              DreamCodeMap is an invitation to return to yourself. ✨
+            </p>
+          </div>
+        </div>
+      </section>
 
       <footer className="footer">
         <div className="footer-container">
