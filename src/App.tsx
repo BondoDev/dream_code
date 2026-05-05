@@ -161,10 +161,15 @@ function App() {
               It is a space designed for deeper self-discovery, clarity,
               creative activation, and authentic transformation.
             </p>
-
             <hr className="final-cta__divider" />
 
             <h3 className="final-cta__subtitle">How It Began</h3>
+            <figure className="final-cta__about-image final-cta__about-image--right">
+              <img
+                src={withBase("images/home_images/about_image-1.jpg")}
+                alt="Reflective portrait symbolizing self-discovery and inner direction."
+              />
+            </figure>
             <p className="final-cta__description">
               This project slowly matured over many years.
             </p>
@@ -200,26 +205,38 @@ function App() {
             <hr className="final-cta__divider" />
 
             <h3 className="final-cta__subtitle">What DreamCodeMap Combines</h3>
-            <p className="final-cta__description">DreamCodeMap brings together:</p>
-            <ul className="final-cta__list">
-              <li>self-discovery questionnaires</li>
-              <li>the Dream Archetype system</li>
-              <li>psychology and habit mechanisms</li>
-              <li>creativity development practices</li>
-              <li>astrology, numerology, and Human Design tools</li>
-              <li>nature-based and embodiment practices</li>
-            </ul>
-            <p className="final-cta__description">
-              The system was designed to support growth on multiple levels
-              simultaneously:
-            </p>
-            <ul className="final-cta__list">
-              <li>physical</li>
-              <li>emotional</li>
-              <li>intellectual</li>
-              <li>creative</li>
-              <li>and inner/spiritual</li>
-            </ul>
+            <div className="final-cta__combine-layout">
+              <div className="final-cta__combine-left">
+                <figure className="final-cta__about-image final-cta__combine-image">
+                  <img
+                    src={withBase("images/home_images/about_image-2.jpg")}
+                    alt="Calm nature-inspired scene representing clarity, growth, and life direction."
+                  />
+                </figure>
+              </div>
+              <div className="final-cta__combine-right">
+                <p className="final-cta__description">DreamCodeMap brings together:</p>
+                <ul className="final-cta__list">
+                  <li>self-discovery questionnaires</li>
+                  <li>the Dream Archetype system</li>
+                  <li>psychology and habit mechanisms</li>
+                  <li>creativity development practices</li>
+                  <li>astrology, numerology, and Human Design tools</li>
+                  <li>nature-based and embodiment practices</li>
+                </ul>
+                <p className="final-cta__description">
+                  The system was designed to support growth on multiple levels
+                  simultaneously:
+                </p>
+                <ul className="final-cta__list">
+                  <li>physical</li>
+                  <li>emotional</li>
+                  <li>intellectual</li>
+                  <li>creative</li>
+                  <li>and inner/spiritual</li>
+                </ul>
+              </div>
+            </div>
             <p className="final-cta__description">
               Because meaningful transformation often begins when we start
               seeing ourselves as a whole.
