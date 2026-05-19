@@ -5,11 +5,17 @@ import "./styles/components/journey-steps.scss";
 import "./styles/components/final-cta.scss";
 import "./styles/components/navbar.scss";
 import "./styles/components/footer.scss";
+import "./styles/components/questionnaire.scss";
 
 const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+const questionnaireRoute = withBase("questionnaire");
 
 function App() {
   const [isPastHalfway, setIsPastHalfway] = useState(false);
+
+  const isQuestionnairePage =
+    window.location.pathname === questionnaireRoute ||
+    window.location.pathname === `${questionnaireRoute}/`;
 
   useEffect(() => {
     const updateScrollDirection = () => {
@@ -29,6 +35,10 @@ function App() {
     };
   }, []);
 
+  const navigateTo = (path: string) => {
+    window.location.assign(path);
+  };
+
   const handleScrollToggle = () => {
     const scrollTarget = isPastHalfway
       ? 0
@@ -40,30 +50,218 @@ function App() {
     });
   };
 
+  const handleStartQuestionnaire = () => {
+    document.getElementById("questionnaire-how-title")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const renderNavbar = () => (
+    <nav className="navbar" aria-label="Main navigation">
+      <div className="nav-container">
+        <button className="logo" type="button" onClick={() => navigateTo(withBase(""))}>
+          Dream Code
+        </button>
+
+        <div className="nav-links">
+          <button className="nav-link" type="button">
+            About
+          </button>
+          <button className="nav-link" type="button">
+            Journey
+          </button>
+          <button className="nav-link" type="button">
+            Contact
+          </button>
+          <button
+            className="nav-link"
+            type="button"
+            onClick={() => navigateTo(questionnaireRoute)}
+          >
+            Questionnaire
+          </button>
+          <button
+            className="nav-button"
+            type="button"
+            onClick={() => navigateTo(questionnaireRoute)}
+          >
+            Start Your Path
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+
+  const renderFooter = () => (
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-brand">Dream Code</div>
+        <div className="footer-links">
+          <button className="footer-link" type="button">
+            About
+          </button>
+          <button className="footer-link" type="button">
+            Contact
+          </button>
+          <button className="footer-link" type="button">
+            Privacy
+          </button>
+        </div>
+        <div className="footer-copy">&copy; 2026 Dream Code. All rights reserved.</div>
+      </div>
+    </footer>
+  );
+
+  if (isQuestionnairePage) {
+    return (
+      <main className="page-shell">
+        {renderNavbar()}
+
+        <section className="questionnaire-hero" aria-labelledby="questionnaire-hero-title">
+          <div className="questionnaire-hero__inner">
+            <h1 id="questionnaire-hero-title" className="questionnaire-hero__title">
+              Discover the Patterns Behind Your Natural Direction
+            </h1>
+            <p className="questionnaire-hero__intro">
+              This guided questionnaire helps you reflect on your childhood interests,
+              natural strengths, inner motivation, emotional blocks, and possible life
+              direction. It is not a clinical test and it does not give fixed labels. It
+              helps you notice patterns that may already exist inside you.
+            </p>
+            <div className="questionnaire-hero-signals">
+              <div className="questionnaire-signal">
+                <strong>20 reflective questions</strong>
+                <p>A calm guided process divided into five short sections.</p>
+              </div>
+              <div className="questionnaire-signal">
+                <strong>No right or wrong answers</strong>
+                <p>Your honest reflection matters more than perfect wording.</p>
+              </div>
+              <div className="questionnaire-signal">
+                <strong>Private self-reflection</strong>
+                <p>Your answers are meant to help you notice your own patterns.</p>
+              </div>
+            </div>
+            <p className="questionnaire-disclaimer">
+              This questionnaire is for self-reflection and personal development only. It is
+              not a medical, psychological, or diagnostic assessment.
+            </p>
+          </div>
+        </section>
+
+        <div className="questionnaire-hero-cta">
+          <button
+            className="questionnaire-primary-button"
+            type="button"
+            onClick={handleStartQuestionnaire}
+          >
+            Start Questionnaire
+          </button>
+        </div>
+
+        <section className="questionnaire-explain" aria-labelledby="questionnaire-explain-title">
+          <div className="questionnaire-section-shell">
+            <h2 id="questionnaire-explain-title" className="questionnaire-section-title">
+              This Is Not Just a Personality Test
+            </h2>
+            <p className="questionnaire-section-text">
+              Dream Code Map is a reflective tool designed to help you uncover your inner
+              code - the patterns of interest, energy, talent, fear, and meaning that may
+              have shaped you from childhood until today.
+            </p>
+            <p className="questionnaire-section-text">
+              Many people live according to patterns created by fear, social expectations,
+              survival mode, and external pressure instead of following the path that truly
+              matches who they are. This questionnaire helps you slow down, reflect honestly,
+              and reconnect with the direction that feels natural to you.
+            </p>
+          </div>
+        </section>
+
+        <section className="questionnaire-explore" aria-labelledby="questionnaire-explore-title">
+          <div className="questionnaire-section-shell">
+            <h2 id="questionnaire-explore-title" className="questionnaire-section-title">
+              What You Will Explore
+            </h2>
+            <div className="questionnaire-card-grid">
+              <article className="questionnaire-card">
+                <h3>Childhood Dream Code</h3>
+                <p>
+                  Reconnect with early interests, repeated dreams, and activities that felt
+                  natural before fear, criticism, or pressure appeared.
+                </p>
+              </article>
+              <article className="questionnaire-card">
+                <h3>Inner Motivation</h3>
+                <p>
+                  Identify what gives you energy, curiosity, meaning, and a feeling of
+                  aliveness in your current life.
+                </p>
+              </article>
+              <article className="questionnaire-card">
+                <h3>Natural Strengths</h3>
+                <p>
+                  Notice talents, problem-solving patterns, and roles that come naturally to
+                  you, even if you have not fully developed them yet.
+                </p>
+              </article>
+              <article className="questionnaire-card">
+                <h3>Inner Blocks</h3>
+                <p>
+                  Recognize fears, limiting thoughts, emotional resistance, and the internal
+                  patterns that may be holding you back.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="questionnaire-how" aria-labelledby="questionnaire-how-title">
+          <div className="questionnaire-section-shell">
+            <h2 id="questionnaire-how-title" className="questionnaire-section-title">
+              How It Works
+            </h2>
+            <div className="questionnaire-steps">
+              <article className="questionnaire-step">
+                <h3>Reflect</h3>
+                <p>Answer 20 open-ended questions honestly and without judging your answers.</p>
+              </article>
+              <article className="questionnaire-step">
+                <h3>Discover Patterns</h3>
+                <p>
+                  Review the themes that appear across your memories, interests, fears,
+                  strengths, and motivations.
+                </p>
+              </article>
+              <article className="questionnaire-step">
+                <h3>Create Direction</h3>
+                <p>
+                  Use your answers to clarify possible directions for life, work, creativity,
+                  personal growth, and your personal brand.
+                </p>
+              </article>
+            </div>
+            <div className="questionnaire-how-cta">
+              <button
+                className="questionnaire-primary-button"
+                type="button"
+                onClick={handleStartQuestionnaire}
+              >
+                Start Questionnaire
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {renderFooter()}
+      </main>
+    );
+  }
+
   return (
     <main className="page-shell">
-      <nav className="navbar" aria-label="Main navigation">
-        <div className="nav-container">
-          <button className="logo" type="button">
-            Dream Code
-          </button>
-
-          <div className="nav-links">
-            <button className="nav-link" type="button">
-              About
-            </button>
-            <button className="nav-link" type="button">
-              Journey
-            </button>
-            <button className="nav-link" type="button">
-              Contact
-            </button>
-            <button className="nav-button" type="button">
-              Start Your Path
-            </button>
-          </div>
-        </div>
-      </nav>
+      {renderNavbar()}
 
       <section className="home-hero" id="top" aria-labelledby="home-hero-title">
         <div className="home-hero__inner">
@@ -73,9 +271,8 @@ function App() {
               Discover Your Natural Talent and Life Direction
             </h1>
             <p className="home-hero__description">
-              A guided process that helps you discover your natural strengths,
-              overcome inner blocks, and turn your dreams into a clear and
-              meaningful life direction.
+              A guided process that helps you discover your natural strengths, overcome inner
+              blocks, and turn your dreams into a clear and meaningful life direction.
             </p>
           </div>
 
@@ -97,20 +294,24 @@ function App() {
               Your Journey in 4 Steps
             </h2>
             <p className="journey-steps__subtitle">
-              A simple process designed to help you discover your natural
-              direction and turn your dreams into a meaningful life path.
+              A simple process designed to help you discover your natural direction and turn your
+              dreams into a meaningful life path.
             </p>
           </div>
 
           <div className="journey-steps__grid">
-            <div className="journey-step-card">
+            <button
+              className="journey-step-card"
+              type="button"
+              onClick={() => navigateTo(questionnaireRoute)}
+            >
               <img
                 className="journey-step-card__icon"
                 src={withBase("images/home_images/questionnaire_image.png")}
                 alt="Questionnaire"
               />
               <span className="journey-step-card__label">Questionnaire</span>
-            </div>
+            </button>
             <div className="journey-step-card">
               <img
                 className="journey-step-card__icon"
@@ -139,11 +340,7 @@ function App() {
         </div>
       </section>
 
-      <section
-        className="final-cta"
-        id="about"
-        aria-labelledby="about-title"
-      >
+      <section className="final-cta" id="about" aria-labelledby="about-title">
         <div className="final-cta__inner">
           <div className="final-cta__content">
             <h2 id="about-title" className="final-cta__title">
@@ -151,16 +348,16 @@ function App() {
             </h2>
 
             <p className="final-cta__description">
-              DreamCodeMap was created to help people reconnect with their
-              natural direction, hidden talents, inner strengths, and forgotten
-              dreams.
+              DreamCodeMap was created to help people reconnect with their natural direction,
+              hidden talents, inner strengths, and forgotten dreams.
             </p>
             <p className="final-cta__description">
               This is not just a self-development course.
               <br />
-              It is a space designed for deeper self-discovery, clarity,
-              creative activation, and authentic transformation.
+              It is a space designed for deeper self-discovery, clarity, creative activation,
+              and authentic transformation.
             </p>
+
             <hr className="final-cta__divider" />
 
             <h3 className="final-cta__subtitle">How It Began</h3>
@@ -174,33 +371,27 @@ function App() {
               This project slowly matured over many years.
             </p>
             <p className="final-cta__description">
-              After more than 20 years of administrative and office work, I
-              constantly felt that I was not truly in my place. I was doing
-              what was necessary - what provided stability, responsibility, and
-              security - but not what genuinely inspired me or made me feel
-              alive.
+              After more than 20 years of administrative and office work, I constantly felt
+              that I was not truly in my place. I was doing what was necessary - what provided
+              stability, responsibility, and security - but not what genuinely inspired me or
+              made me feel alive.
             </p>
             <p className="final-cta__description">
-              Although I performed my work professionally, I felt disconnected
-              from my deeper potential because it was never aligned with my true
-              interests or inner calling.
+              Although I performed my work professionally, I felt disconnected from my deeper
+              potential because it was never aligned with my true interests or inner calling.
             </p>
             <p className="final-cta__description">
-              At a turning point in my life, I began searching for a deeper
-              understanding of myself, my purpose, and human potential. Along
-              this journey, I explored psychology, behavioral patterns,
-              creativity, astrology, numerology, and other systems as tools for
-              self-discovery and personal insight.
+              At a turning point in my life, I began searching for a deeper understanding of
+              myself, my purpose, and human potential. Along this journey, I explored
+              psychology, behavioral patterns, creativity, astrology, numerology, and other
+              systems as tools for self-discovery and personal insight.
             </p>
             <p className="final-cta__description">
-              Over time, more and more people came to me for guidance. That is
-              when I realized that helping others recognize their strengths,
-              reconnect with their inspiration, and discover their hidden
-              potential was one of my natural gifts.
+              Over time, more and more people came to me for guidance. That is when I realized
+              that helping others recognize their strengths, reconnect with their inspiration,
+              and discover their hidden potential was one of my natural gifts.
             </p>
-            <p className="final-cta__description">
-              This is how DreamCodeMap was born.
-            </p>
+            <p className="final-cta__description">This is how DreamCodeMap was born.</p>
 
             <hr className="final-cta__divider" />
 
@@ -225,8 +416,7 @@ function App() {
                   <li>nature-based and embodiment practices</li>
                 </ul>
                 <p className="final-cta__description">
-                  The system was designed to support growth on multiple levels
-                  simultaneously:
+                  The system was designed to support growth on multiple levels simultaneously:
                 </p>
                 <ul className="final-cta__list">
                   <li>physical</li>
@@ -238,29 +428,25 @@ function App() {
               </div>
             </div>
             <p className="final-cta__description">
-              Because meaningful transformation often begins when we start
-              seeing ourselves as a whole.
+              Because meaningful transformation often begins when we start seeing ourselves as a
+              whole.
             </p>
 
             <hr className="final-cta__divider" />
 
             <h3 className="final-cta__subtitle">The Vision</h3>
             <p className="final-cta__description">
-              I believe that many people are not lacking talent or potential -
-              they simply were never given the tools, space, or guidance to
-              recognize their inner patterns and authentic direction.
+              I believe that many people are not lacking talent or potential - they simply were
+              never given the tools, space, or guidance to recognize their inner patterns and
+              authentic direction.
             </p>
-            <p className="final-cta__description">
-              DreamCodeMap exists to help people:
-            </p>
+            <p className="final-cta__description">DreamCodeMap exists to help people:</p>
             <ul className="final-cta__list">
               <li>understand themselves more deeply</li>
               <li>uncover their natural abilities</li>
               <li>recognize inner blocks</li>
               <li>activate creative energy</li>
-              <li>
-                and transform dreams into real direction and meaningful action
-              </li>
+              <li>and transform dreams into real direction and meaningful action</li>
             </ul>
 
             <hr className="final-cta__divider" />
@@ -269,35 +455,17 @@ function App() {
             <p className="final-cta__description">
               Sometimes people are not truly lost.
               <br />
-              They have simply spent too much time living according to
-              expectations that were never truly theirs.
+              They have simply spent too much time living according to expectations that were
+              never truly theirs.
             </p>
             <p className="final-cta__description">
-              DreamCodeMap is an invitation to return to yourself. ✨
+              DreamCodeMap is an invitation to return to yourself.
             </p>
           </div>
         </div>
       </section>
 
-      <footer className="footer">
-        <div className="footer-container">
-          <div className="footer-brand">Dream Code</div>
-          <div className="footer-links">
-            <button className="footer-link" type="button">
-              About
-            </button>
-            <button className="footer-link" type="button">
-              Contact
-            </button>
-            <button className="footer-link" type="button">
-              Privacy
-            </button>
-          </div>
-          <div className="footer-copy">
-            &copy; 2026 Dream Code. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      {renderFooter()}
 
       <button
         className="scroll-toggle"
