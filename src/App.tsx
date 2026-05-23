@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import "./styles/components/home-hero.scss";
 import "./styles/components/journey-steps.scss";
@@ -7,15 +7,258 @@ import "./styles/components/navbar.scss";
 import "./styles/components/footer.scss";
 import "./styles/components/questionnaire.scss";
 
+type Question = {
+  id: string;
+  number: number;
+  text: string;
+  placeholder: string;
+};
+
+type QuestionnaireSection = {
+  id: string;
+  title: string;
+  description: string;
+  questions: Question[];
+};
+
+const questionnaireSections: QuestionnaireSection[] = [
+  {
+    id: "childhood-dream-code",
+    title: "Childhood Dream Code",
+    description:
+      "Look back at the interests, dreams, games, and activities that felt natural to you before external pressure became stronger.",
+    questions: [
+      {
+        id: "q1",
+        number: 1,
+        text: "What did you want to be as a child, or what did you enjoy doing the most?",
+        placeholder:
+          "Write freely. You can mention dreams, games, hobbies, fantasies, or repeated interests from childhood.",
+      },
+      {
+        id: "q2",
+        number: 2,
+        text: "Which activity made you lose track of time when you were a child?",
+        placeholder:
+          "Think about activities where hours passed quickly because you were deeply interested or absorbed.",
+      },
+      {
+        id: "q3",
+        number: 3,
+        text: "Did you have a dream or idea that kept coming back to you at different ages?",
+        placeholder:
+          "Describe any recurring dream, idea, ambition, image, or interest that returned many times in your life.",
+      },
+      {
+        id: "q4",
+        number: 4,
+        text: "If there were no criticism, fear, or financial limitations today, what activity would you choose?",
+        placeholder:
+          "Imagine you are fully free from judgment, pressure, and survival concerns. What would you naturally move toward?",
+      },
+    ],
+  },
+  {
+    id: "inner-motivation",
+    title: "Inner Motivation",
+    description:
+      "Explore what gives you energy, meaning, curiosity, and emotional connection in your current life.",
+    questions: [
+      {
+        id: "q5",
+        number: 5,
+        text: "What activity gives you the most energy today, even when you are tired?",
+        placeholder:
+          "Write about something that wakes you up internally or makes you feel more alive.",
+      },
+      {
+        id: "q6",
+        number: 6,
+        text: "What do you do in your free time just because you love it, even if you do not get paid for it?",
+        placeholder:
+          "Mention activities, topics, habits, creative work, learning, helping others, building things, or exploring ideas.",
+      },
+      {
+        id: "q7",
+        number: 7,
+        text: "What topics can you think or talk about for hours?",
+        placeholder:
+          "Write the subjects you naturally return to, research, discuss, watch, read about, or imagine often.",
+      },
+      {
+        id: "q8",
+        number: 8,
+        text: "When do you feel that your life is most meaningful?",
+        placeholder:
+          "Describe moments, situations, people, activities, or goals that make life feel significant to you.",
+      },
+    ],
+  },
+  {
+    id: "natural-talents",
+    title: "Natural Talents",
+    description:
+      "Notice what comes easily to you, what others recognize in you, and what kind of problems you naturally like solving.",
+    questions: [
+      {
+        id: "q9",
+        number: 9,
+        text: "What comes most naturally and easily to you?",
+        placeholder:
+          "Think about skills, behaviors, ways of thinking, communication styles, creativity, leadership, analysis, care, or problem-solving.",
+      },
+      {
+        id: "q10",
+        number: 10,
+        text: "What talent or skill have others noticed in you from childhood to today?",
+        placeholder:
+          "Write what people have repeatedly told you that you are good at, even if you did not take it seriously.",
+      },
+      {
+        id: "q11",
+        number: 11,
+        text: "What type of problems do you most enjoy solving?",
+        placeholder:
+          "Examples: technical problems, emotional problems, creative problems, business problems, social problems, strategic problems, practical problems.",
+      },
+      {
+        id: "q12",
+        number: 12,
+        text: "What role do you most often take in a group?",
+        placeholder:
+          "For example: leader, observer, helper, organizer, creator, analyst, protector, challenger, mediator, teacher, entertainer.",
+      },
+    ],
+  },
+  {
+    id: "blocks-and-obstacles",
+    title: "Blocks and Obstacles",
+    description:
+      "Reflect on the fears, doubts, internal resistance, and external pressures that may prevent you from following your natural direction.",
+    questions: [
+      {
+        id: "q13",
+        number: 13,
+        text: "What most prevents you from choosing the path that attracts you?",
+        placeholder:
+          "Write about fear, money, confidence, family expectations, social pressure, lack of skills, uncertainty, or anything else.",
+      },
+      {
+        id: "q14",
+        number: 14,
+        text: "What are you most afraid of if you follow this dream?",
+        placeholder:
+          "Be honest. You can write about failure, judgment, rejection, poverty, losing stability, wasting time, or disappointing others.",
+      },
+      {
+        id: "q15",
+        number: 15,
+        text: "What thought or phrase repeats often in your mind when you think about this topic?",
+        placeholder:
+          "Examples: “I am too late,” “I am not good enough,” “This is unrealistic,” “People will laugh,” “I do not know where to start.”",
+      },
+      {
+        id: "q16",
+        number: 16,
+        text: "What could you lose and what could you gain if you choose this path?",
+        placeholder:
+          "Write both sides honestly: possible risks, sacrifices, benefits, freedom, growth, identity, relationships, money, or meaning.",
+      },
+    ],
+  },
+  {
+    id: "life-direction",
+    title: "Life Direction",
+    description:
+      "Connect your answers to the kind of contribution, identity, lifestyle, and future that may feel meaningful to you.",
+    questions: [
+      {
+        id: "q17",
+        number: 17,
+        text: "In helping or supporting whom do you feel special significance?",
+        placeholder:
+          "Think about the people, groups, communities, or types of individuals you naturally care about helping or influencing.",
+      },
+      {
+        id: "q18",
+        number: 18,
+        text: "What change do you want to see in the world through your participation?",
+        placeholder:
+          "Describe the kind of improvement, impact, beauty, solution, justice, knowledge, support, or creation you would like to contribute.",
+      },
+      {
+        id: "q19",
+        number: 19,
+        text: "How do you want people to feel after interacting with you?",
+        placeholder:
+          "Examples: inspired, understood, stronger, calmer, entertained, protected, guided, challenged, hopeful, confident, free.",
+      },
+      {
+        id: "q20",
+        number: 20,
+        text: "Imagine that your dream is a reality. What does your ideal day look like?",
+        placeholder:
+          "Describe where you are, what you do, who you interact with, what kind of work you do, and how you feel during the day.",
+      },
+    ],
+  },
+];
+
 const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const questionnaireRoute = withBase("questionnaire");
+const questionnaireStartRoute = withBase("questionnaire/start");
+
+const ANSWERS_STORAGE_KEY = "dreamCodeQuestionnaireAnswers";
+const SECTION_INDEX_STORAGE_KEY = "dreamCodeQuestionnaireCurrentSection";
+
+const normalizePath = (path: string) => path.replace(/\/+$/, "");
 
 function App() {
   const [isPastHalfway, setIsPastHalfway] = useState(false);
+  const [answers, setAnswers] = useState<Record<string, string>>(() => {
+    try {
+      const savedAnswers = window.localStorage.getItem(ANSWERS_STORAGE_KEY);
+      return savedAnswers ? (JSON.parse(savedAnswers) as Record<string, string>) : {};
+    } catch {
+      return {};
+    }
+  });
+  const [currentSectionIndex, setCurrentSectionIndex] = useState<number>(() => {
+    try {
+      const savedSectionIndex = window.localStorage.getItem(SECTION_INDEX_STORAGE_KEY);
+      if (!savedSectionIndex) {
+        return 0;
+      }
+      const parsedIndex = Number(savedSectionIndex);
+      if (Number.isNaN(parsedIndex)) {
+        return 0;
+      }
+      return Math.min(Math.max(parsedIndex, 0), questionnaireSections.length - 1);
+    } catch {
+      return 0;
+    }
+  });
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [ownConclusion, setOwnConclusion] = useState("");
 
-  const isQuestionnairePage =
-    window.location.pathname === questionnaireRoute ||
-    window.location.pathname === `${questionnaireRoute}/`;
+  const pathname = normalizePath(window.location.pathname);
+  const isQuestionnairePage = pathname === normalizePath(questionnaireRoute);
+  const isQuestionnaireStartPage = pathname === normalizePath(questionnaireStartRoute);
+
+  const currentSection = questionnaireSections[currentSectionIndex];
+  const isLastSection = currentSectionIndex === questionnaireSections.length - 1;
+  const progressPercent = useMemo(
+    () => Math.round(((currentSectionIndex + 1) / questionnaireSections.length) * 100),
+    [currentSectionIndex],
+  );
+
+  useEffect(() => {
+    window.localStorage.setItem(ANSWERS_STORAGE_KEY, JSON.stringify(answers));
+  }, [answers]);
+
+  useEffect(() => {
+    window.localStorage.setItem(SECTION_INDEX_STORAGE_KEY, String(currentSectionIndex));
+  }, [currentSectionIndex]);
 
   useEffect(() => {
     const updateScrollDirection = () => {
@@ -50,11 +293,31 @@ function App() {
     });
   };
 
-  const handleStartQuestionnaire = () => {
-    document.getElementById("questionnaire-how-title")?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+  const handleAnswerChange = (questionId: string, value: string) => {
+    setAnswers((previousAnswers) => ({ ...previousAnswers, [questionId]: value }));
+  };
+
+  const handleBackSection = () => {
+    setCurrentSectionIndex((index) => Math.max(index - 1, 0));
+  };
+
+  const handleSaveAndContinue = () => {
+    if (isLastSection) {
+      setIsCompleted(true);
+      return;
+    }
+    setCurrentSectionIndex((index) =>
+      Math.min(index + 1, questionnaireSections.length - 1),
+    );
+  };
+
+  const handleRestartQuestionnaire = () => {
+    setAnswers({});
+    setOwnConclusion("");
+    setCurrentSectionIndex(0);
+    setIsCompleted(false);
+    window.localStorage.removeItem(ANSWERS_STORAGE_KEY);
+    window.localStorage.removeItem(SECTION_INDEX_STORAGE_KEY);
   };
 
   const renderNavbar = () => (
@@ -113,6 +376,155 @@ function App() {
     </footer>
   );
 
+  if (isQuestionnaireStartPage) {
+    return (
+      <main className="page-shell">
+        {renderNavbar()}
+
+        <section className="questionnaire-form-shell questionnaire-start-shell">
+          <div className="questionnaire-section-shell">
+            <button
+              className="questionnaire-back-intro"
+              type="button"
+              onClick={() => navigateTo(questionnaireRoute)}
+            >
+              &larr; Back to Introduction
+            </button>
+
+            <div className="questionnaire-form-card questionnaire-start-card">
+              <span className="questionnaire-badge">Dream Code Map</span>
+              <h1 className="questionnaire-form-card__title">Questionnaire</h1>
+              <p className="questionnaire-form-card__description">
+                Answer slowly and honestly. There are no right or wrong answers.
+              </p>
+
+              {!isCompleted ? (
+                <>
+                  <div className="questionnaire-section-bar">
+                    <p className="questionnaire-section-count">
+                      Section {currentSectionIndex + 1} of {questionnaireSections.length}
+                    </p>
+                    <h2 className="questionnaire-section-title-start">{currentSection.title}</h2>
+                  </div>
+                  <div className="questionnaire-progress" aria-hidden="true">
+                    <span
+                      className="questionnaire-progress-fill"
+                      style={{ width: `${progressPercent}%` }}
+                    />
+                  </div>
+
+                  <p className="questionnaire-guide-note">{currentSection.description}</p>
+
+                  {currentSection.questions.map((question) => (
+                    <div className="question-block" key={question.id}>
+                      <div className="question-heading">
+                        <span className="question-number">{question.number}</span>
+                        <h3>{question.text}</h3>
+                      </div>
+                      <p className="question-helper">{question.placeholder}</p>
+                      <div className="answer-field">
+                        <textarea
+                          className="question-textarea"
+                          id={question.id}
+                          value={answers[question.id] ?? ""}
+                          onChange={(event) =>
+                            handleAnswerChange(question.id, event.target.value)
+                          }
+                          placeholder="Write your answer here..."
+                        />
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="questionnaire-form-actions questionnaire-actions">
+                    <button
+                      className="questionnaire-secondary-button questionnaire-button-secondary"
+                      type="button"
+                      onClick={handleBackSection}
+                      disabled={currentSectionIndex === 0}
+                    >
+                      Back
+                    </button>
+                    <button
+                      className="questionnaire-primary-button questionnaire-button-primary"
+                      type="button"
+                      onClick={handleSaveAndContinue}
+                    >
+                      {isLastSection ? "Complete Questionnaire" : "Save & Continue"}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h2 className="questionnaire-form-card__title">Your Dream Code Reflection</h2>
+                  <p className="questionnaire-form-card__description">
+                    Your answers are not final labels. They are reflection material. Read
+                    them slowly and look for repeated patterns, emotional energy, fears,
+                    strengths, and possible directions.
+                  </p>
+
+                  {questionnaireSections.map((section) => (
+                    <article className="reflection-group" key={section.id}>
+                      <h3>{section.title}</h3>
+                      {section.questions.map((question) => (
+                        <div className="reflection-answer" key={question.id}>
+                          <h4>
+                            {question.number}. {question.text}
+                          </h4>
+                          <p>{answers[question.id]?.trim() || "No answer provided yet."}</p>
+                        </div>
+                      ))}
+                    </article>
+                  ))}
+
+                  <div className="questionnaire-field">
+                    <label htmlFor="own-conclusion">Your Own Conclusion</label>
+                    <p className="questionnaire-field__helper">
+                      After reviewing your answers, write what you think your Dream Code
+                      may be pointing toward.
+                    </p>
+                    <textarea
+                      id="own-conclusion"
+                      value={ownConclusion}
+                      onChange={(event) => setOwnConclusion(event.target.value)}
+                      placeholder="Write your personal conclusion here. What direction, role, lifestyle, work, creative path, or personal transformation feels most connected to your answers?"
+                    />
+                  </div>
+
+                  <div className="questionnaire-form-actions">
+                    <button
+                      className="questionnaire-secondary-button"
+                      type="button"
+                      onClick={() => setIsCompleted(false)}
+                    >
+                      Edit Answers
+                    </button>
+                    <button
+                      className="questionnaire-secondary-button"
+                      type="button"
+                      onClick={handleRestartQuestionnaire}
+                    >
+                      Restart Questionnaire
+                    </button>
+                    <button
+                      className="questionnaire-primary-button"
+                      type="button"
+                      onClick={() => navigateTo(questionnaireRoute)}
+                    >
+                      Back to Introduction
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {renderFooter()}
+      </main>
+    );
+  }
+
   if (isQuestionnairePage) {
     return (
       <main className="page-shell">
@@ -154,7 +566,7 @@ function App() {
           <button
             className="questionnaire-primary-button"
             type="button"
-            onClick={handleStartQuestionnaire}
+            onClick={() => navigateTo(questionnaireStartRoute)}
           >
             Start Questionnaire
           </button>
@@ -246,7 +658,7 @@ function App() {
               <button
                 className="questionnaire-primary-button"
                 type="button"
-                onClick={handleStartQuestionnaire}
+                onClick={() => navigateTo(questionnaireStartRoute)}
               >
                 Start Questionnaire
               </button>
