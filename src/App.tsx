@@ -533,31 +533,43 @@ function App() {
         <section className="questionnaire-hero" aria-labelledby="questionnaire-hero-title">
           <div className="questionnaire-hero__inner">
             <h1 id="questionnaire-hero-title" className="questionnaire-hero__title">
-              Discover the Patterns Behind Your Natural Direction
+              Dream Code Map - Core Questionnaire
             </h1>
             <p className="questionnaire-hero__intro">
-              This guided questionnaire helps you reflect on your childhood interests,
-              natural strengths, inner motivation, emotional blocks, and possible life
-              direction. It is not a clinical test and it does not give fixed labels. It
-              helps you notice patterns that may already exist inside you.
+              This is not just a personality test. It is a self-discovery tool designed
+              to help you uncover your inner code, including the archetypal patterns that
+              shape your motivations, interests, behavior, creativity, and life
+              direction.
             </p>
             <div className="questionnaire-hero-signals">
               <div className="questionnaire-signal">
-                <strong>20 reflective questions</strong>
-                <p>A calm guided process divided into five short sections.</p>
+                <strong>The purpose of this questionnaire</strong>
+                <p>
+                  Reconnect with your natural interests, discover what gives you energy,
+                  recognize your strengths, identify inner blocks, and create a clearer
+                  direction for life, work, creativity, and your personal brand.
+                </p>
               </div>
               <div className="questionnaire-signal">
-                <strong>No right or wrong answers</strong>
-                <p>Your honest reflection matters more than perfect wording.</p>
+                <strong>Your answers help reveal</strong>
+                <p>
+                  Which archetypes are most active in your personality, what drives your
+                  decisions and desires, how you express creativity and purpose, and which
+                  roles and environments resonate most deeply with you.
+                </p>
               </div>
               <div className="questionnaire-signal">
-                <strong>Private self-reflection</strong>
-                <p>Your answers are meant to help you notice your own patterns.</p>
+                <strong>The questionnaire combines ideas from</strong>
+                <p>
+                  Neuroscience, behavioral psychology, archetype systems, intrinsic
+                  motivation research, and creative and intuitive thinking models.
+                </p>
               </div>
             </div>
             <p className="questionnaire-disclaimer">
-              This questionnaire is for self-reflection and personal development only. It is
-              not a medical, psychological, or diagnostic assessment.
+              This process does not tell you who you should become. It helps you remember
+              who you have always been. Answer honestly. There are no right or wrong
+              answers.
             </p>
           </div>
         </section>
@@ -578,15 +590,14 @@ function App() {
               This Is Not Just a Personality Test
             </h2>
             <p className="questionnaire-section-text">
-              Dream Code Map is a reflective tool designed to help you uncover your inner
-              code - the patterns of interest, energy, talent, fear, and meaning that may
-              have shaped you from childhood until today.
+              Many people live according to patterns created by fear, social
+              expectations, survival mode, and external pressure instead of following the
+              path that truly matches who they are.
             </p>
             <p className="questionnaire-section-text">
-              Many people live according to patterns created by fear, social expectations,
-              survival mode, and external pressure instead of following the path that truly
-              matches who they are. This questionnaire helps you slow down, reflect honestly,
-              and reconnect with the direction that feels natural to you.
+              The questionnaire is partially based on the 12 archetype system, where each
+              person expresses a unique combination of psychological patterns and inner
+              motivations.
             </p>
           </div>
         </section>
@@ -594,35 +605,35 @@ function App() {
         <section className="questionnaire-explore" aria-labelledby="questionnaire-explore-title">
           <div className="questionnaire-section-shell">
             <h2 id="questionnaire-explore-title" className="questionnaire-section-title">
-              What You Will Explore
+              The Purpose of This Questionnaire
             </h2>
             <div className="questionnaire-card-grid">
               <article className="questionnaire-card">
-                <h3>Childhood Dream Code</h3>
+                <h3>Reconnect and rediscover</h3>
                 <p>
-                  Reconnect with early interests, repeated dreams, and activities that felt
-                  natural before fear, criticism, or pressure appeared.
+                  Reconnect with your natural interests and childhood dream code, and
+                  discover what genuinely gives you energy.
                 </p>
               </article>
               <article className="questionnaire-card">
-                <h3>Inner Motivation</h3>
+                <h3>Recognize your inner design</h3>
                 <p>
-                  Identify what gives you energy, curiosity, meaning, and a feeling of
-                  aliveness in your current life.
+                  Recognize your natural talents and strengths, and better understand your
+                  dominant and secondary archetypes.
                 </p>
               </article>
               <article className="questionnaire-card">
-                <h3>Natural Strengths</h3>
+                <h3>Identify what holds you back</h3>
                 <p>
-                  Notice talents, problem-solving patterns, and roles that come naturally to
-                  you, even if you have not fully developed them yet.
+                  Identify the internal blocks that may be limiting your growth, direction,
+                  and ability to follow what feels true to you.
                 </p>
               </article>
               <article className="questionnaire-card">
-                <h3>Inner Blocks</h3>
+                <h3>Create clearer direction</h3>
                 <p>
-                  Recognize fears, limiting thoughts, emotional resistance, and the internal
-                  patterns that may be holding you back.
+                  Create a clearer direction for your life, work, creativity, and personal
+                  brand.
                 </p>
               </article>
             </div>
@@ -632,25 +643,28 @@ function App() {
         <section className="questionnaire-how" aria-labelledby="questionnaire-how-title">
           <div className="questionnaire-section-shell">
             <h2 id="questionnaire-how-title" className="questionnaire-section-title">
-              How It Works
+              After Completing It, You Will Receive Insights Into
             </h2>
             <div className="questionnaire-steps">
               <article className="questionnaire-step">
-                <h3>Reflect</h3>
-                <p>Answer 20 open-ended questions honestly and without judging your answers.</p>
-              </article>
-              <article className="questionnaire-step">
-                <h3>Discover Patterns</h3>
+                <h3>Your archetypes and motivation</h3>
                 <p>
-                  Review the themes that appear across your memories, interests, fears,
-                  strengths, and motivations.
+                  Discover your dominant and secondary archetypes along with the
+                  motivational patterns that shape your decisions and desires.
                 </p>
               </article>
               <article className="questionnaire-step">
-                <h3>Create Direction</h3>
+                <h3>Your strengths and blocks</h3>
                 <p>
-                  Use your answers to clarify possible directions for life, work, creativity,
-                  personal growth, and your personal brand.
+                  Recognize your strengths and growth areas, as well as emotional blocks
+                  and inner resistance that may be affecting your path.
+                </p>
+              </article>
+              <article className="questionnaire-step">
+                <h3>Your possible direction</h3>
+                <p>
+                  Clarify possible directions for your career, creativity, personal
+                  development, and your authentic personal brand tendencies.
                 </p>
               </article>
             </div>
