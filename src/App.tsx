@@ -6,6 +6,7 @@ import "./styles/components/final-cta.scss";
 import "./styles/components/navbar.scss";
 import "./styles/components/footer.scss";
 import "./styles/components/questionnaire.scss";
+import "./styles/components/lectures.scss";
 
 type Question = {
   id: string;
@@ -19,6 +20,17 @@ type QuestionnaireSection = {
   title: string;
   description: string;
   questions: Question[];
+};
+
+type LectureModule = {
+  id: string;
+  number: string;
+  title: string;
+  summary: string;
+  intro: string;
+  keyPoints: string[];
+  practicalWork?: string[];
+  outcome: string;
 };
 
 const questionnaireSections: QuestionnaireSection[] = [
@@ -204,9 +216,183 @@ const questionnaireSections: QuestionnaireSection[] = [
   },
 ];
 
+const lectureFoundations = [
+  "Neuroscience",
+  "Psychology",
+  "Creative thinking",
+  "Habit systems",
+  "Archetype models",
+  "Personal branding strategies",
+  "Practical self-discovery tools",
+];
+
+const lectureAudience = [
+  "People who feel lost in direction",
+  "People who sense inner potential but cannot activate it",
+  "People searching for their own path",
+  "People who want creative or professional self-realization",
+  "People who want to build an authentic brand and meaningful work",
+  "People who simply want to understand themselves better",
+  "Creative individuals",
+  "Entrepreneurs",
+  "Brand creators",
+  "People seeking career changes",
+  "Those who feel they are meant for something more but cannot find direction",
+];
+
+const lectureGains = [
+  "Better understand your psychological and creative profile",
+  "Identify your main archetypes and inner motivations",
+  "Recognize what prevents you from taking real action",
+  "Learn how habits, motivation, and the brain work",
+  "Develop creativity and idea-generation skills",
+  "Reduce procrastination and perfectionism",
+  "Create your personal strategy",
+  "Define your brand and ideal audience",
+  "Build a realistic and sustainable planning system",
+  "Create a more authentic and conscious life",
+];
+
+const lectureMainIdea = [
+  "Habits",
+  "Neural patterns",
+  "Inner beliefs",
+  "Environment",
+  "The story you tell yourself about who you are",
+];
+
+const lectureModules: LectureModule[] = [
+  {
+    id: "module-01",
+    number: "01",
+    title: "Brain, Motivation, and Neuroscience",
+    summary:
+      "Understand how the brain, nervous system, stress, dopamine, and motivation influence behavior and change.",
+    intro:
+      "In this module, you will learn how the brain, nervous system, stress, dopamine, and motivation influence your behavior, energy, and ability to change.",
+    keyPoints: [
+      "How the brain works",
+      "How dopamine, stress, and the nervous system function",
+      "Why change is difficult",
+      "How motivation works on a biological level",
+      "Why the brain sometimes blocks action",
+    ],
+    outcome:
+      "You will understand the biological foundation behind motivation, resistance, stress, and change.",
+  },
+  {
+    id: "module-02",
+    number: "02",
+    title: "Habits and Behavioral Change",
+    summary:
+      "Learn how habits are formed, why old patterns return, and how to build systems for real behavioral change.",
+    intro:
+      "In this module, you will study how habits are formed, why old patterns return, and how to build systems that support real behavioral change.",
+    keyPoints: [
+      "How habits are formed in the brain",
+      "Why change feels difficult",
+      "How dopamine, motivation, and reward systems work",
+      "How environment affects behavior",
+      "Why we return to old patterns",
+      "How the habit loop works",
+      "The cue -> behavior -> reward system",
+      "Why change is not only about willpower",
+      "How stress affects habits",
+    ],
+    practicalWork: [
+      "Systems for reducing bad habits",
+      "Building new habits",
+      "Identity-based habit approaches",
+      "Environment design",
+      "Behavior tracking",
+      "Habit stacking techniques",
+      "Reducing procrastination",
+      "Starting with small actions",
+      "Creating a sustainable daily system",
+      "Making change natural rather than forced",
+    ],
+    outcome:
+      "You will gain a conscious map of your habits, practical tools for behavioral change, a stable progress system, and greater control over your daily life.",
+  },
+  {
+    id: "module-03",
+    number: "03",
+    title: "Creativity Development",
+    summary:
+      "Explore how ideas are born, why creativity gets blocked, and how to build a practical creative system.",
+    intro:
+      "In this module, you will explore how creativity works, why the brain blocks ideas, and how to develop a practical creative system.",
+    keyPoints: [
+      "Why the brain blocks creativity",
+      "How the flow state works",
+      "How ideas are born",
+      "How insight and intuition function",
+    ],
+    practicalWork: [
+      "Visualization techniques",
+      "Idea-generation systems",
+      "Creative exercises",
+      "Open loops and incubation processes",
+    ],
+    outcome:
+      "You will learn to increase creative energy, overcome self-judgment and perfectionism, generate ideas systematically, and use creativity as a practical tool.",
+  },
+  {
+    id: "module-04",
+    number: "04",
+    title: "Blocks and Energy Management",
+    summary:
+      "Recognize procrastination, fear, perfectionism, emotional exhaustion, and learn how to restore energy and focus.",
+    intro:
+      "In this module, you will explore the inner blocks that stop action and learn how to manage emotional energy, focus, and resistance.",
+    keyPoints: [
+      "Procrastination",
+      "Fear",
+      "Demotivation",
+      "Emotional exhaustion",
+      "Perfectionism",
+      "Why the brain stops action",
+      "How emotional defense mechanisms work",
+      "How environment affects behavior",
+      "How to restore energy and focus",
+    ],
+    practicalWork: [
+      "Nervous system regulation",
+      "Breathing techniques",
+      "Emotional regulation",
+      "Systems for managing energy and attention",
+    ],
+    outcome:
+      "You will learn how to recognize resistance, restore energy, regulate emotions, and create better conditions for focused action.",
+  },
+  {
+    id: "module-05",
+    number: "05",
+    title: "From Dream to Goal",
+    summary:
+      "Transform unclear dreams into goals, personal strategy, positioning, and a practical development plan.",
+    intro:
+      "This module helps you transform unclear dreams into goals, personal strategy, positioning, and a practical development plan.",
+    keyPoints: [
+      "Clearly defining your dreams",
+      "Transforming dreams into goals",
+      "Building a personal strategy",
+      "Creating your own brand",
+      "Understanding your ideal audience",
+      "Competitor analysis",
+      "Positioning",
+      "Planning and system building",
+    ],
+    outcome:
+      "You will gain a clear structure for your vision, an action system, the foundation of your brand, and a practical development plan.",
+  },
+];
+
 const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const questionnaireRoute = withBase("questionnaire");
 const questionnaireStartRoute = withBase("questionnaire/start");
+const lecturesRoute = withBase("lectures");
+const contactRoute = withBase("contact");
 
 const ANSWERS_STORAGE_KEY = "dreamCodeQuestionnaireAnswers";
 const SECTION_INDEX_STORAGE_KEY = "dreamCodeQuestionnaireCurrentSection";
@@ -240,10 +426,13 @@ function App() {
   });
   const [isCompleted, setIsCompleted] = useState(false);
   const [ownConclusion, setOwnConclusion] = useState("");
+  const [openModuleId, setOpenModuleId] = useState<string>("module-01");
 
   const pathname = normalizePath(window.location.pathname);
   const isQuestionnairePage = pathname === normalizePath(questionnaireRoute);
   const isQuestionnaireStartPage = pathname === normalizePath(questionnaireStartRoute);
+  const isLecturesPage = pathname === normalizePath(lecturesRoute);
+  const isContactPage = pathname === normalizePath(contactRoute);
 
   const currentSection = questionnaireSections[currentSectionIndex];
   const isLastSection = currentSectionIndex === questionnaireSections.length - 1;
@@ -280,6 +469,10 @@ function App() {
 
   const navigateTo = (path: string) => {
     window.location.assign(path);
+  };
+
+  const navigateToHomeSection = (sectionId: string) => {
+    window.location.assign(`${withBase("")}#${sectionId}`);
   };
 
   const handleScrollToggle = () => {
@@ -320,6 +513,10 @@ function App() {
     window.localStorage.removeItem(SECTION_INDEX_STORAGE_KEY);
   };
 
+  const handleToggleModule = (moduleId: string) => {
+    setOpenModuleId((current) => (current === moduleId ? "" : moduleId));
+  };
+
   const renderNavbar = () => (
     <nav className="navbar" aria-label="Main navigation">
       <div className="nav-container">
@@ -328,13 +525,13 @@ function App() {
         </button>
 
         <div className="nav-links">
-          <button className="nav-link" type="button">
+          <button className="nav-link" type="button" onClick={() => navigateToHomeSection("about")}>
             About
           </button>
-          <button className="nav-link" type="button">
+          <button className="nav-link" type="button" onClick={() => navigateToHomeSection("journey")}>
             Journey
           </button>
-          <button className="nav-link" type="button">
+          <button className="nav-link" type="button" onClick={() => navigateTo(contactRoute)}>
             Contact
           </button>
           <button
@@ -361,10 +558,10 @@ function App() {
       <div className="footer-container">
         <div className="footer-brand">Dream Code</div>
         <div className="footer-links">
-          <button className="footer-link" type="button">
+          <button className="footer-link" type="button" onClick={() => navigateToHomeSection("about")}>
             About
           </button>
-          <button className="footer-link" type="button">
+          <button className="footer-link" type="button" onClick={() => navigateTo(contactRoute)}>
             Contact
           </button>
           <button className="footer-link" type="button">
@@ -685,6 +882,320 @@ function App() {
     );
   }
 
+  if (isLecturesPage) {
+    return (
+      <main className="page-shell">
+        {renderNavbar()}
+
+        <section className="lectures-hero" aria-labelledby="lectures-hero-title">
+          <div className="lectures-shell lectures-hero__inner">
+            <div className="lectures-hero__content">
+              <span className="lectures-badge">Dream Code Map Lectures</span>
+              <h1 id="lectures-hero-title" className="lectures-hero__title">
+                Discover Your Inner Code, Direction, and Real Potential
+              </h1>
+              <p className="lectures-hero__text">
+                Dream Code Map Lectures are a structured personal development course
+                designed to help you understand your inner patterns, discover what gives
+                you energy, recognize what blocks you, and transform your ideas into
+                clear direction and practical systems.
+              </p>
+              <div className="lectures-hero__actions">
+                <button
+                  className="questionnaire-primary-button"
+                  type="button"
+                  onClick={() => navigateTo(questionnaireRoute)}
+                >
+                  Start with Questionnaire
+                </button>
+                <button
+                  className="questionnaire-secondary-button"
+                  type="button"
+                  onClick={() => navigateTo(contactRoute)}
+                >
+                  Contact About Lectures
+                </button>
+              </div>
+              <p className="lectures-quiet-note">
+                This course is for self-discovery and personal development. It is not a
+                medical, psychological, or diagnostic service.
+              </p>
+            </div>
+
+            <aside className="lectures-hero__panel" aria-label="Lecture course focus">
+              <div className="lectures-hero__panel-card">
+                <span className="lectures-panel-label">Structured next step</span>
+                <h2>From reflection to direction</h2>
+                <p>
+                  This page is designed as a deeper continuation after the questionnaire:
+                  a calm, layered program that turns insight into clearer habits,
+                  creativity, focus, and personal strategy.
+                </p>
+                <ul className="lectures-panel-list">
+                  <li>Inner patterns</li>
+                  <li>Motivation and habits</li>
+                  <li>Creative direction</li>
+                  <li>Practical personal systems</li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section className="lectures-section" aria-labelledby="lectures-course-title">
+          <div className="lectures-shell">
+            <div className="lectures-section-heading">
+              <span className="lectures-section-kicker">Course Overview</span>
+              <h2 id="lectures-course-title">What This Course Is</h2>
+            </div>
+            <div className="lectures-editorial">
+              <div className="lectures-editorial__text">
+                <p>
+                  Dream Code Map is an integrated lecture course inspired by
+                  neuroscience, psychology, creative thinking, habit systems,
+                  archetype models, personal branding strategies, and practical
+                  self-discovery tools.
+                </p>
+                <p>
+                  This course is designed to help people move from confusion, inner
+                  resistance, and unrealized potential toward clearer direction,
+                  stronger self-understanding, and more conscious action.
+                </p>
+                <p>
+                  This is not just a motivational course. It is a structured process
+                  that helps you understand how your brain works, discover what gives
+                  you energy, recognize what blocks you, and transform your ideas into
+                  real direction and systems.
+                </p>
+              </div>
+              <div className="lectures-foundation-card" aria-label="Course foundations">
+                <div className="lectures-tag-grid">
+                  {lectureFoundations.map((foundation) => (
+                    <span className="lectures-tag" key={foundation}>
+                      {foundation}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="lectures-section lectures-section--soft" aria-labelledby="lectures-audience-title">
+          <div className="lectures-shell">
+            <div className="lectures-section-heading">
+              <span className="lectures-section-kicker">Audience</span>
+              <h2 id="lectures-audience-title">Who This Course Is For</h2>
+              <p>
+                This course is designed for people who want to understand themselves
+                more deeply and create a clearer path forward.
+              </p>
+            </div>
+            <div className="lectures-checklist-grid">
+              {lectureAudience.map((item) => (
+                <div className="lectures-checklist-item" key={item}>
+                  <span className="lectures-checklist-marker" aria-hidden="true" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="lectures-section" aria-labelledby="lectures-gains-title">
+          <div className="lectures-shell">
+            <div className="lectures-section-heading">
+              <span className="lectures-section-kicker">Outcomes</span>
+              <h2 id="lectures-gains-title">What You Will Gain From This Course</h2>
+            </div>
+            <div className="lectures-gain-grid">
+              {lectureGains.map((gain, index) => (
+                <article className="lectures-gain-item" key={gain}>
+                  <span className="lectures-gain-number" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{gain}</h3>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="lectures-section lectures-section--modules" aria-labelledby="lectures-modules-title">
+          <div className="lectures-shell">
+            <div className="lectures-section-heading">
+              <span className="lectures-section-kicker">Modules</span>
+              <h2 id="lectures-modules-title">Course Modules</h2>
+            </div>
+            <div className="lectures-module-accordion">
+              {lectureModules.map((module) => (
+                <article
+                  className={`lectures-module-card ${openModuleId === module.id ? "lectures-module-card--open is-open" : ""}`}
+                  key={module.id}
+                >
+                  <button
+                    className="lectures-module-toggle"
+                    type="button"
+                    onClick={() => handleToggleModule(module.id)}
+                    aria-expanded={openModuleId === module.id}
+                    aria-controls={`${module.id}-panel`}
+                  >
+                    <div className="lectures-module-card__top">
+                      <span className="lectures-module-number">Module {module.number}</span>
+                      <div className="lectures-module-heading">
+                        <h3>{module.title}</h3>
+                        <p className="lectures-module-summary">{module.summary}</p>
+                      </div>
+                    </div>
+                    <span
+                      className={`lectures-module-indicator ${openModuleId === module.id ? "lectures-module-indicator--open" : ""}`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  {openModuleId === module.id ? (
+                    <div className="lectures-module-panel" id={`${module.id}-panel`}>
+                      <div className="lectures-module-panel-inner">
+                        <p className="lectures-module-intro">{module.intro}</p>
+                        <div className="lectures-module-block">
+                          <h4>Key learning points</h4>
+                          <ul>
+                            {module.keyPoints.map((point) => (
+                              <li key={point}>{point}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        {module.practicalWork ? (
+                          <div className="lectures-module-block">
+                            <h4>Practical work</h4>
+                            <ul>
+                              {module.practicalWork.map((point) => (
+                                <li key={point}>{point}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        ) : null}
+                        <div className="lectures-module-outcome">
+                          <h4>Practical outcome</h4>
+                          <p>{module.outcome}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="lectures-section lectures-section--soft" aria-labelledby="lectures-idea-title">
+          <div className="lectures-shell">
+            <div className="lectures-section-heading">
+              <span className="lectures-section-kicker">Core Idea</span>
+              <h2 id="lectures-idea-title">The Main Idea</h2>
+            </div>
+            <div className="lectures-main-idea">
+              <div className="lectures-main-idea__text">
+                <p>
+                  Your life is not created only by goals. It is shaped by habits,
+                  neural patterns, inner beliefs, environment, and the story you tell
+                  yourself about who you are.
+                </p>
+                <p>
+                  Dream Code Map helps you become aware of these patterns and transform
+                  your inner potential into real direction.
+                </p>
+              </div>
+              <div className="lectures-main-idea__terms" aria-label="Core forces shaping direction">
+                {lectureMainIdea.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="lectures-final-cta" aria-labelledby="lectures-cta-title">
+          <div className="lectures-shell">
+            <div className="lectures-final-card">
+              <span className="lectures-section-kicker">Next Step</span>
+              <h2 id="lectures-cta-title">Start With Your Own Dream Code</h2>
+              <p>
+                The best way to begin is by answering the Dream Code Map
+                Questionnaire. It helps you reflect on your natural interests,
+                motivations, talents, blocks, and possible life direction before
+                going deeper into the lecture course.
+              </p>
+              <div className="lectures-hero__actions">
+                <button
+                  className="questionnaire-primary-button"
+                  type="button"
+                  onClick={() => navigateTo(questionnaireRoute)}
+                >
+                  Take the Questionnaire
+                </button>
+                <button
+                  className="questionnaire-secondary-button"
+                  type="button"
+                  onClick={() => navigateTo(contactRoute)}
+                >
+                  Contact About Lectures
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {renderFooter()}
+      </main>
+    );
+  }
+
+  if (isContactPage) {
+    return (
+      <main className="page-shell">
+        {renderNavbar()}
+
+        <section className="lectures-contact" aria-labelledby="contact-page-title">
+          <div className="lectures-shell">
+            <div className="lectures-contact__card">
+              <span className="lectures-badge">Dream Code Map Contact</span>
+              <h1 id="contact-page-title" className="lectures-hero__title">
+                Contact About Lectures
+              </h1>
+              <p className="lectures-hero__text">
+                If you want to ask about the Dream Code Map lectures, the
+                questionnaire, or the next steps in the program, use your current
+                Dream Code contact channel to continue the conversation.
+              </p>
+              <div className="lectures-hero__actions">
+                <button
+                  className="questionnaire-primary-button"
+                  type="button"
+                  onClick={() => navigateTo(questionnaireRoute)}
+                >
+                  Start with Questionnaire
+                </button>
+                <button
+                  className="questionnaire-secondary-button"
+                  type="button"
+                  onClick={() => navigateTo(withBase(""))}
+                >
+                  Back to Home
+                </button>
+              </div>
+              <p className="lectures-quiet-note">
+                Dream Code Map focuses on self-discovery, personal development, and
+                clearer direction. It is not a medical or diagnostic service.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {renderFooter()}
+      </main>
+    );
+  }
+
   return (
     <main className="page-shell">
       {renderNavbar()}
@@ -713,7 +1224,7 @@ function App() {
           </div>
         </div>
 
-        <div className="section-shell">
+        <div className="section-shell" id="journey">
           <div className="journey-steps__header">
             <span className="journey-steps__eyebrow">C.T.A.</span>
             <h2 id="journey-steps-title" className="journey-steps__title">
@@ -746,14 +1257,18 @@ function App() {
               />
               <span className="journey-step-card__label">Consultation</span>
             </div>
-            <div className="journey-step-card">
+            <button
+              className="journey-step-card"
+              type="button"
+              onClick={() => navigateTo(lecturesRoute)}
+            >
               <img
                 className="journey-step-card__icon"
                 src={withBase("images/home_images/lectures_image.png")}
                 alt="Lectures"
               />
               <span className="journey-step-card__label">Lectures</span>
-            </div>
+            </button>
             <div className="journey-step-card">
               <img
                 className="journey-step-card__icon"
