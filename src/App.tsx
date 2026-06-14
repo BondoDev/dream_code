@@ -1,3 +1,4 @@
+import type { FormEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
 
 import "./styles/components/home-hero.scss";
@@ -7,6 +8,7 @@ import "./styles/components/navbar.scss";
 import "./styles/components/footer.scss";
 import "./styles/components/questionnaire.scss";
 import "./styles/components/lectures.scss";
+import "./styles/components/consultation.scss";
 
 type Question = {
   id: string;
@@ -31,6 +33,14 @@ type LectureModule = {
   keyPoints: string[];
   practicalWork?: string[];
   outcome: string;
+};
+
+type ConsultationFormValues = {
+  fullName: string;
+  email: string;
+  phone: string;
+  purpose: string;
+  description: string;
 };
 
 const questionnaireSections: QuestionnaireSection[] = [
@@ -388,11 +398,80 @@ const lectureModules: LectureModule[] = [
   },
 ];
 
+const consultationExplorationItems = [
+  "Discovering your direction and genuine interests",
+  "Archetype analysis and self-discovery",
+  "Understanding your inner motivations",
+  "Identifying blocks, fears, and internal resistance",
+  "Reflecting on the next stage of your life or work",
+  "Gaining clarity in decision-making",
+  "Uncovering your unique potential and strengths",
+];
+
+const consultationOutcomeItems = [
+  "A deeper understanding of yourself",
+  "Individual feedback",
+  "New perspective and clarity",
+  "Better awareness of your strengths and internal blocks",
+  "Personalized directions for further development",
+];
+
+const consultationOutcomeLabels = [
+  "Insight",
+  "Feedback",
+  "Clarity",
+  "Awareness",
+  "Direction",
+];
+
+const consultationFormatItems = [
+  {
+    title: "Online",
+    text: "The consultation is held online, so you can join from wherever you are.",
+  },
+  {
+    title: "30–45 minutes",
+    text: "A focused session designed for reflection, clarity, and practical next steps.",
+  },
+  {
+    title: "Georgian / English / Russian",
+    text: "Choose the language that feels most natural for you.",
+  },
+];
+
+const consultationPurposeOptions = [
+  "Discovering direction",
+  "Understanding inner blocks",
+  "Career or work clarity",
+  "Creative self-realization",
+  "Personal brand direction",
+  "General self-discovery",
+  "Other",
+];
+
+const consultationPreviewAvailability = [
+  {
+    day: "Monday",
+    times: ["10:00", "12:30", "16:00"],
+  },
+  {
+    day: "Wednesday",
+    times: ["11:00", "15:30"],
+  },
+  {
+    day: "Friday",
+    times: ["13:00", "17:00"],
+  },
+];
+
 const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const questionnaireRoute = withBase("questionnaire");
 const questionnaireStartRoute = withBase("questionnaire/start");
 const lecturesRoute = withBase("lectures");
+const consultationRoute = withBase("consultation");
 const contactRoute = withBase("contact");
+const GOOGLE_CALENDAR_BOOKING_URL = "";
+// Later, replace the placeholder calendar with a Google Calendar Appointment Schedule embed or external booking link.
 
 const ANSWERS_STORAGE_KEY = "dreamCodeQuestionnaireAnswers";
 const SECTION_INDEX_STORAGE_KEY = "dreamCodeQuestionnaireCurrentSection";
@@ -427,11 +506,21 @@ function App() {
   const [isCompleted, setIsCompleted] = useState(false);
   const [ownConclusion, setOwnConclusion] = useState("");
   const [openModuleId, setOpenModuleId] = useState<string>("module-01");
+  const [consultationFormValues, setConsultationFormValues] = useState<ConsultationFormValues>({
+    fullName: "",
+    email: "",
+    phone: "",
+    purpose: consultationPurposeOptions[0],
+    description: "",
+  });
+  const [consultationSubmitted, setConsultationSubmitted] = useState(false);
+  const [activeBookingStep, setActiveBookingStep] = useState<"time" | "details">("time");
 
   const pathname = normalizePath(window.location.pathname);
   const isQuestionnairePage = pathname === normalizePath(questionnaireRoute);
   const isQuestionnaireStartPage = pathname === normalizePath(questionnaireStartRoute);
   const isLecturesPage = pathname === normalizePath(lecturesRoute);
+  const isConsultationPage = pathname === normalizePath(consultationRoute);
   const isContactPage = pathname === normalizePath(contactRoute);
 
   const currentSection = questionnaireSections[currentSectionIndex];
@@ -515,6 +604,33 @@ function App() {
 
   const handleToggleModule = (moduleId: string) => {
     setOpenModuleId((current) => (current === moduleId ? "" : moduleId));
+  };
+
+  const scrollToBookingForm = () => {
+    const target = document.getElementById("booking-form");
+    if (!target) {
+      return;
+    }
+
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const handleConsultationFieldChange = (
+    field: keyof ConsultationFormValues,
+    value: string,
+  ) => {
+    setConsultationFormValues((current) => ({
+      ...current,
+      [field]: value,
+    }));
+  };
+
+  const handleConsultationSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setConsultationSubmitted(true);
   };
 
   const renderNavbar = () => (
@@ -1150,6 +1266,488 @@ function App() {
     );
   }
 
+  if (isConsultationPage) {
+    return (
+      <main className="page-shell">
+        {renderNavbar()}
+
+        <section className="consultation-hero" aria-labelledby="consultation-hero-title">
+          <div className="consultation-shell">
+            <div className="consultation-hero-card">
+              <div className="consultation-hero-card__content">
+                <span className="consultation-badge">Dream Code Map Consultation</span>
+                <h1 id="consultation-hero-title" className="consultation-hero__title">
+                  A Personal Space to Understand Yourself Better
+                </h1>
+                <p className="consultation-hero__lead">
+                  Gain clarity about your direction, inner resources, behavioral
+                  patterns, and possible next steps.
+                </p>
+                <p className="consultation-hero__text">
+                  Sometimes the answers are not outside of us. Sometimes we simply
+                  need space to pause, observe ourselves, and notice what remains
+                  invisible in everyday life.
+                </p>
+                <div className="consultation-hero__actions">
+                  <button
+                    className="questionnaire-primary-button"
+                    type="button"
+                    onClick={scrollToBookingForm}
+                  >
+                    Book a Consultation
+                  </button>
+                  <button
+                    className="questionnaire-secondary-button"
+                    type="button"
+                    onClick={() => navigateTo(questionnaireRoute)}
+                  >
+                    Start with Questionnaire
+                  </button>
+                </div>
+                <p className="consultation-quiet-note">
+                  Personal consultation · Self-discovery · Direction clarity
+                </p>
+              </div>
+
+              <aside className="session-glance-card" aria-label="Session at a glance">
+                <span className="consultation-section-kicker">Session at a Glance</span>
+                <h2>Consultation Format</h2>
+                <ul className="session-glance-list">
+                  <li className="session-glance-item">
+                    <span className="session-glance-marker" aria-hidden="true" />
+                    <span>Online consultation</span>
+                  </li>
+                  <li className="session-glance-item">
+                    <span className="session-glance-marker" aria-hidden="true" />
+                    <span>30–45 minutes</span>
+                  </li>
+                  <li className="session-glance-item">
+                    <span className="session-glance-marker" aria-hidden="true" />
+                    <span>Georgian / English / Russian</span>
+                  </li>
+                  <li className="session-glance-item">
+                    <span className="session-glance-marker" aria-hidden="true" />
+                    <span>Self-discovery and direction clarity</span>
+                  </li>
+                </ul>
+                <p className="session-glance-note">
+                  A calm one-to-one space to pause, understand your patterns, and
+                  clarify your next step.
+                </p>
+                <button
+                  className="session-glance-link"
+                  type="button"
+                  onClick={scrollToBookingForm}
+                >
+                  View booking form
+                </button>
+                <p className="session-glance-hint">
+                  Start with a short form below, or begin with the questionnaire
+                  first.
+                </p>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section className="consultation-section" aria-labelledby="consultation-why-title">
+          <div className="consultation-shell consultation-editorial">
+            <div className="consultation-section-heading">
+              <span className="consultation-section-kicker">Personal Clarity</span>
+              <h2 id="consultation-why-title">Why This Consultation Exists</h2>
+              <p>
+                This consultation is designed to help us explore together your inner
+                resources, interests, behavioral patterns, archetypal tendencies, and
+                possible next steps.
+              </p>
+              <p>
+                This is not about receiving ready-made advice. It is an individual
+                process that helps you recognize your unique strengths and discover
+                possible directions for moving forward.
+              </p>
+            </div>
+            <aside className="consultation-highlight-card">
+              <span className="consultation-highlight-card__line" aria-hidden="true" />
+              <p>
+                Sometimes the answers are not outside of us. Sometimes we simply need
+                space to pause, observe ourselves, and notice what remains invisible
+                in everyday life.
+              </p>
+            </aside>
+          </div>
+        </section>
+
+        <section
+          className="consultation-section consultation-section--soft"
+          aria-labelledby="consultation-explore-title"
+        >
+          <div className="consultation-shell">
+            <div className="consultation-section-heading">
+              <span className="consultation-section-kicker">Exploration Areas</span>
+              <h2 id="consultation-explore-title">
+                During the Consultation We May Explore
+              </h2>
+            </div>
+            <div className="compact-check-panel">
+              <div className="compact-check-grid">
+                {consultationExplorationItems.map((item) => (
+                  <div className="compact-check-item" key={item}>
+                    <span className="compact-check-marker" aria-hidden="true" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="consultation-section consultation-section--outcomes"
+          aria-labelledby="consultation-outcomes-title"
+        >
+          <div className="consultation-shell">
+            <div className="consultation-section-heading consultation-section-heading--narrow">
+              <span className="consultation-section-kicker">Outcomes</span>
+              <h2 id="consultation-outcomes-title">What You Will Receive</h2>
+              <p>
+                The goal of the consultation is to help you leave with more clarity,
+                self-awareness, and a better sense of possible next steps.
+              </p>
+            </div>
+            <div className="outcome-grid">
+              {consultationOutcomeItems.map((item, index) => (
+                <article className="outcome-card" key={item}>
+                  <div className="outcome-card__top">
+                    <span className="consultation-outcome-number" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="outcome-card__label">
+                      {consultationOutcomeLabels[index]}
+                    </span>
+                  </div>
+                  <h3>{item}</h3>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="consultation-section consultation-section--soft"
+          aria-labelledby="consultation-format-title"
+        >
+          <div className="consultation-shell">
+            <div className="consultation-section-heading consultation-section-heading--narrow">
+              <span className="consultation-section-kicker">Format</span>
+              <h2 id="consultation-format-title">Consultation Format</h2>
+            </div>
+            <div className="format-strip">
+              {consultationFormatItems.map((item) => (
+                <article className="format-strip-item" key={item.title}>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="consultation-section consultation-booking"
+          id="booking-form"
+          aria-labelledby="consultation-booking-title"
+        >
+          <div className="consultation-shell">
+            <div className="consultation-section-heading consultation-section-heading--narrow">
+              <span className="consultation-section-kicker">Booking</span>
+              <h2 id="consultation-booking-title">Book a Consultation</h2>
+              <p>
+                Choose an available consultation time first. Then share a few
+                details so the session can be more focused.
+              </p>
+            </div>
+
+            <div className="consultation-booking-card">
+              <div
+                className="consultation-booking-tabs"
+                role="tablist"
+                aria-label="Consultation booking steps"
+              >
+                <button
+                  className={`consultation-booking-tab ${activeBookingStep === "time" ? "is-active" : ""}`}
+                  type="button"
+                  role="tab"
+                  id="booking-tab-time"
+                  aria-selected={activeBookingStep === "time"}
+                  aria-controls="booking-panel-time"
+                  onClick={() => setActiveBookingStep("time")}
+                >
+                  Step 1 — Choose Time
+                </button>
+                <button
+                  className={`consultation-booking-tab ${activeBookingStep === "details" ? "is-active" : ""}`}
+                  type="button"
+                  role="tab"
+                  id="booking-tab-details"
+                  aria-selected={activeBookingStep === "details"}
+                  aria-controls="booking-panel-details"
+                  onClick={() => setActiveBookingStep("details")}
+                >
+                  Step 2 — Details
+                </button>
+              </div>
+
+              <p className="consultation-booking-progress" aria-hidden="true">
+                1 Choose Time → 2 Details
+              </p>
+
+              {activeBookingStep === "time" ? (
+                <div
+                  className="consultation-booking-step"
+                  id="booking-panel-time"
+                  role="tabpanel"
+                  aria-labelledby="booking-tab-time"
+                >
+                  <div className="consultation-step-heading">
+                    <span className="consultation-step-number">Step 1</span>
+                    <h3>Choose Your Time</h3>
+                  </div>
+
+                  <div className="calendar-preview-card">
+                    <div className="calendar-preview-card__header">
+                      <p>
+                        Available consultation times will appear here through Google
+                        Calendar. For now, this is a preview of the booking area.
+                      </p>
+                    </div>
+
+                    <div className="calendar-preview-grid" aria-label="Preview consultation times">
+                      {consultationPreviewAvailability.map((day) => (
+                        <article className="calendar-preview-day" key={day.day}>
+                          <h4>{day.day}</h4>
+                          <div className="calendar-preview-slots">
+                            {day.times.map((time) => (
+                              <button
+                                className="calendar-preview-slot"
+                                key={`${day.day}-${time}`}
+                                type="button"
+                                disabled
+                              >
+                                {time}
+                              </button>
+                            ))}
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+
+                    <button
+                      className="calendar-preview-select-button"
+                      type="button"
+                      disabled={!GOOGLE_CALENDAR_BOOKING_URL}
+                    >
+                      Select time
+                    </button>
+
+                    <p className="calendar-preview-note">
+                      Google Calendar integration coming soon. You will be able to choose
+                      a real free time and receive a calendar invitation.
+                    </p>
+
+                    <div className="consultation-booking-actions consultation-booking-actions--end">
+                      <button
+                        className="questionnaire-primary-button"
+                        type="button"
+                        onClick={() => setActiveBookingStep("details")}
+                      >
+                        Continue to Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="consultation-booking-step"
+                  id="booking-panel-details"
+                  role="tabpanel"
+                  aria-labelledby="booking-tab-details"
+                >
+                  <div className="consultation-step-heading">
+                    <span className="consultation-step-number">Step 2</span>
+                    <h3>Tell Me What You Want to Explore</h3>
+                  </div>
+
+                  <div className="consultation-form-card">
+                    <p className="consultation-form-intro">
+                      After choosing a time, share what you would like to explore during
+                      the consultation.
+                    </p>
+                    <p className="consultation-form-helper">
+                      For now, you can describe your preferred time in the message if
+                      needed.
+                    </p>
+                    <form className="consultation-form" onSubmit={handleConsultationSubmit}>
+                      <div className="consultation-form-grid consultation-form-grid--two">
+                        <div className="consultation-field">
+                          <label htmlFor="consultation-full-name">Full name</label>
+                          <input
+                            id="consultation-full-name"
+                            name="fullName"
+                            type="text"
+                            required
+                            placeholder="Your full name"
+                            value={consultationFormValues.fullName}
+                            onChange={(event) =>
+                              handleConsultationFieldChange("fullName", event.target.value)
+                            }
+                          />
+                        </div>
+
+                        <div className="consultation-field">
+                          <label htmlFor="consultation-email">Email</label>
+                          <input
+                            id="consultation-email"
+                            name="email"
+                            type="email"
+                            required
+                            placeholder="your@email.com"
+                            value={consultationFormValues.email}
+                            onChange={(event) =>
+                              handleConsultationFieldChange("email", event.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="consultation-form-grid consultation-form-grid--two">
+                        <div className="consultation-field">
+                          <label htmlFor="consultation-phone">Phone number</label>
+                          <input
+                            id="consultation-phone"
+                            name="phone"
+                            type="tel"
+                            placeholder="Your phone number"
+                            value={consultationFormValues.phone}
+                            onChange={(event) =>
+                              handleConsultationFieldChange("phone", event.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="consultation-form-grid">
+                        <div className="consultation-field">
+                          <label htmlFor="consultation-purpose">Purpose of consultation</label>
+                          <select
+                            id="consultation-purpose"
+                            name="purpose"
+                            required
+                            value={consultationFormValues.purpose}
+                            onChange={(event) =>
+                              handleConsultationFieldChange("purpose", event.target.value)
+                            }
+                          >
+                            {consultationPurposeOptions.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="consultation-form-grid">
+                        <div className="consultation-field">
+                          <label htmlFor="consultation-description">
+                            Short description — what question or topic would you like to
+                            explore?
+                          </label>
+                          <textarea
+                            id="consultation-description"
+                            name="description"
+                            required
+                            rows={6}
+                            placeholder="Write a few sentences about what you would like to understand, clarify, or explore during the consultation."
+                            value={consultationFormValues.description}
+                            onChange={(event) =>
+                              handleConsultationFieldChange("description", event.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div className="consultation-form__footer">
+                        <p className="consultation-disclaimer">
+                          This consultation is for self-discovery and personal development.
+                          It is not a medical, psychological, or diagnostic service.
+                        </p>
+                        <div className="consultation-booking-actions">
+                          <button
+                            className="questionnaire-secondary-button"
+                            type="button"
+                            onClick={() => setActiveBookingStep("time")}
+                          >
+                            Back to Time Selection
+                          </button>
+                          <button className="questionnaire-primary-button" type="submit">
+                            Send Consultation Details
+                          </button>
+                        </div>
+                      </div>
+
+                      {consultationSubmitted ? (
+                        <p
+                          className="consultation-success-message"
+                          role="status"
+                          aria-live="polite"
+                        >
+                          Thank you. Your consultation details have been prepared.
+                          Calendar booking will be connected soon.
+                        </p>
+                      ) : null}
+                    </form>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <section className="consultation-final-cta" aria-labelledby="consultation-cta-title">
+          <div className="consultation-shell">
+            <div className="consultation-final-card consultation-final-card--compact">
+              <h2 id="consultation-cta-title">Not Sure Where to Begin?</h2>
+              <p>
+                If you are unsure what to ask, start with the Dream Code Map
+                Questionnaire. It can help you reflect on your natural interests,
+                motivations, strengths, blocks, and possible life direction before
+                the consultation.
+              </p>
+              <div className="consultation-hero__actions consultation-hero__actions--center">
+                <button
+                  className="questionnaire-primary-button"
+                  type="button"
+                  onClick={() => navigateTo(questionnaireRoute)}
+                >
+                  Take the Questionnaire
+                </button>
+                <button
+                  className="questionnaire-secondary-button"
+                  type="button"
+                  onClick={() => navigateTo(withBase(""))}
+                >
+                  Back to Home
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {renderFooter()}
+      </main>
+    );
+  }
+
   if (isContactPage) {
     return (
       <main className="page-shell">
@@ -1249,14 +1847,18 @@ function App() {
               />
               <span className="journey-step-card__label">Questionnaire</span>
             </button>
-            <div className="journey-step-card">
+            <button
+              className="journey-step-card"
+              type="button"
+              onClick={() => navigateTo(consultationRoute)}
+            >
               <img
                 className="journey-step-card__icon"
                 src={withBase("images/home_images/consultation_image.png")}
                 alt="Consultation"
               />
               <span className="journey-step-card__label">Consultation</span>
-            </div>
+            </button>
             <button
               className="journey-step-card"
               type="button"
