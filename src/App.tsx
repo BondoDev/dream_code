@@ -9,6 +9,7 @@ import "./styles/components/footer.scss";
 import "./styles/components/questionnaire.scss";
 import "./styles/components/lectures.scss";
 import "./styles/components/consultation.scss";
+import "./styles/components/retreat.scss";
 
 type Question = {
   id: string;
@@ -40,6 +41,25 @@ type ConsultationFormValues = {
   email: string;
   phone: string;
   purpose: string;
+  description: string;
+};
+
+type RetreatGainItem = {
+  label: string;
+  title: string;
+};
+
+type RetreatInfoItem = {
+  label: string;
+  value: string;
+};
+
+type RetreatFormValues = {
+  fullName: string;
+  email: string;
+  phone: string;
+  purpose: string;
+  expectations: string;
   description: string;
 };
 
@@ -464,12 +484,91 @@ const consultationPreviewAvailability = [
   },
 ];
 
+const retreatExperienceItems = [
+  "Self-discovery",
+  "Archetype-based practices",
+  "Creative exercises",
+  "Reflection",
+  "Nature and intentional space",
+  "Dialogue and inner observation",
+];
+
+const retreatExploreItems = [
+  "Understanding your personal direction",
+  "Exploring your archetypal profile",
+  "Discovering inner resources and interests",
+  "Creative and intuitive practices",
+  "Reducing emotional overload",
+  "Shaping your personal vision and next chapter",
+];
+
+const retreatGainItems: RetreatGainItem[] = [
+  {
+    label: "Insight",
+    title: "Deeper self-understanding",
+  },
+  {
+    label: "Space",
+    title: "Temporary distance from everyday overload",
+  },
+  {
+    label: "Inspiration",
+    title: "New perspectives and inspiration",
+  },
+  {
+    label: "Connection",
+    title: "Stronger connection with your authentic desires",
+  },
+  {
+    label: "Direction",
+    title: "Practical insights for your next steps",
+  },
+];
+
+const retreatForItems = [
+  "You feel emotionally or mentally exhausted",
+  "You are going through a period of change",
+  "You are searching for a new direction",
+  "You want deeper connection with yourself",
+  "You want to create intentional time and space for reflection",
+];
+
+const upcomingRetreatInfo: RetreatInfoItem[] = [
+  {
+    label: "Location",
+    value: "Coming soon",
+  },
+  {
+    label: "Date",
+    value: "Coming soon",
+  },
+  {
+    label: "Duration",
+    value: "Coming soon",
+  },
+  {
+    label: "Number of participants",
+    value: "Limited small group",
+  },
+];
+
+const retreatPurposeOptions = [
+  "Self-discovery",
+  "New direction",
+  "Emotional reset",
+  "Creative inspiration",
+  "Personal vision",
+  "Life or work transition",
+  "Other",
+];
+
 const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const questionnaireRoute = withBase("questionnaire");
 const questionnaireStartRoute = withBase("questionnaire/start");
 const lecturesRoute = withBase("lectures");
 const consultationRoute = withBase("consultation");
 const contactRoute = withBase("contact");
+const retreatRoute = withBase("retreat");
 const GOOGLE_CALENDAR_BOOKING_URL = "";
 // Later, replace the placeholder calendar with a Google Calendar Appointment Schedule embed or external booking link.
 
@@ -515,6 +614,15 @@ function App() {
   });
   const [consultationSubmitted, setConsultationSubmitted] = useState(false);
   const [activeBookingStep, setActiveBookingStep] = useState<"time" | "details">("time");
+  const [retreatFormValues, setRetreatFormValues] = useState<RetreatFormValues>({
+    fullName: "",
+    email: "",
+    phone: "",
+    purpose: retreatPurposeOptions[0],
+    expectations: "",
+    description: "",
+  });
+  const [retreatSubmitted, setRetreatSubmitted] = useState(false);
 
   const pathname = normalizePath(window.location.pathname);
   const isQuestionnairePage = pathname === normalizePath(questionnaireRoute);
@@ -522,6 +630,7 @@ function App() {
   const isLecturesPage = pathname === normalizePath(lecturesRoute);
   const isConsultationPage = pathname === normalizePath(consultationRoute);
   const isContactPage = pathname === normalizePath(contactRoute);
+  const isRetreatPage = pathname === normalizePath(retreatRoute);
 
   const currentSection = questionnaireSections[currentSectionIndex];
   const isLastSection = currentSectionIndex === questionnaireSections.length - 1;
@@ -606,8 +715,8 @@ function App() {
     setOpenModuleId((current) => (current === moduleId ? "" : moduleId));
   };
 
-  const scrollToBookingForm = () => {
-    const target = document.getElementById("booking-form");
+  const scrollToSection = (sectionId: string) => {
+    const target = document.getElementById(sectionId);
     if (!target) {
       return;
     }
@@ -616,6 +725,14 @@ function App() {
       behavior: "smooth",
       block: "start",
     });
+  };
+
+  const scrollToBookingForm = () => {
+    scrollToSection("booking-form");
+  };
+
+  const scrollToRetreatRegistration = () => {
+    scrollToSection("retreat-registration");
   };
 
   const handleConsultationFieldChange = (
@@ -631,6 +748,25 @@ function App() {
   const handleConsultationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setConsultationSubmitted(true);
+  };
+
+  const handleRetreatFieldChange = (
+    field: keyof RetreatFormValues,
+    value: string,
+  ) => {
+    setRetreatFormValues((current) => ({
+      ...current,
+      [field]: value,
+    }));
+
+    if (retreatSubmitted) {
+      setRetreatSubmitted(false);
+    }
+  };
+
+  const handleRetreatSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setRetreatSubmitted(true);
   };
 
   const renderNavbar = () => (
@@ -1748,6 +1884,396 @@ function App() {
     );
   }
 
+  if (isRetreatPage) {
+    return (
+      <main className="page-shell">
+        {renderNavbar()}
+
+        <section className="retreat-hero" aria-labelledby="retreat-hero-title">
+          <div className="retreat-shell">
+            <div className="retreat-hero-card">
+              <div className="retreat-hero__content">
+                <span className="retreat-badge">Dream Code Map Retreat</span>
+                <h1 id="retreat-hero-title" className="retreat-hero__title">
+                  Pause. Listen. Discover Your Next Direction.
+                </h1>
+                <p className="retreat-hero__subtitle">
+                  Step away from noise, routine, and constant movement to reconnect with
+                  yourself from a different perspective.
+                </p>
+                <p className="retreat-hero__text">
+                  Sometimes answers are not born from receiving more information. They
+                  appear when we create space - away from noise, routine, and constant
+                  movement.
+                </p>
+                <div className="retreat-hero__actions">
+                  <button
+                    className="questionnaire-primary-button"
+                    type="button"
+                    onClick={scrollToRetreatRegistration}
+                  >
+                    Register for Retreat
+                  </button>
+                  <button
+                    className="questionnaire-secondary-button"
+                    type="button"
+                    onClick={() => navigateTo(questionnaireRoute)}
+                  >
+                    Start with Questionnaire
+                  </button>
+                </div>
+                <p className="retreat-quiet-note">
+                  Small-group experience | Reflection | Nature | Direction clarity
+                </p>
+              </div>
+
+              <aside className="retreat-hero-panel" aria-label="Retreat at a glance">
+                <span className="retreat-section-kicker">Retreat at a Glance</span>
+                <h2>Retreat Format</h2>
+                <ul className="retreat-glance-list">
+                  <li>A few hours or a few days</li>
+                  <li>Small-group experience</li>
+                  <li>Nature and intentional space</li>
+                  <li>Creative and reflective practices</li>
+                  <li>Personal vision and next steps</li>
+                </ul>
+                <div className="retreat-hero-panel__reflection">
+                  <p>
+                    A retreat is not simply rest. It is a guided space to pause,
+                    observe yourself, and notice what everyday life often hides.
+                  </p>
+                </div>
+                <button
+                  className="retreat-hero-panel__link"
+                  type="button"
+                  onClick={() => scrollToSection("retreat-upcoming-title")}
+                >
+                  View upcoming retreat
+                </button>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section className="retreat-section" id="retreat-overview" aria-labelledby="retreat-overview-title">
+          <div className="retreat-shell">
+            <div className="retreat-editorial">
+              <div className="retreat-editorial__content">
+                <div className="retreat-section-heading">
+                  <span className="retreat-section-kicker">Intentional Space</span>
+                  <h2 id="retreat-overview-title">What This Retreat Is</h2>
+                </div>
+                <div className="retreat-editorial__text">
+                  <p>
+                    Dream Code Map retreats are designed to help you step out of
+                    everyday life for a few hours or a few days and reconnect with
+                    yourself from a different perspective.
+                  </p>
+                  <p>
+                    This is not simply rest. It is an experience that combines
+                    self-discovery, archetype-based practices, creative exercises,
+                    reflection, nature, intentional space, dialogue, and inner
+                    observation.
+                  </p>
+                </div>
+              </div>
+              <aside className="retreat-foundation-card" aria-label="The experience combines">
+                <h3>The Experience Combines</h3>
+                <div className="retreat-tag-grid">
+                  {retreatExperienceItems.map((item) => (
+                    <span className="retreat-tag" key={item}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="retreat-section retreat-section--soft"
+          id="retreat-exploration"
+          aria-labelledby="retreat-exploration-title"
+        >
+          <div className="retreat-shell">
+            <div className="retreat-section-heading retreat-section-heading--exploration">
+              <span className="retreat-section-kicker">Retreat Exploration</span>
+              <h2 id="retreat-exploration-title">What We Explore During the Retreat</h2>
+            </div>
+            <div className="retreat-check-panel">
+              <div className="retreat-check-grid">
+                {retreatExploreItems.map((item) => (
+                  <div className="retreat-check-item" key={item}>
+                    <span className="retreat-check-marker" aria-hidden="true" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="retreat-section" aria-labelledby="retreat-gains-title">
+          <div className="retreat-shell">
+            <div className="retreat-section-heading retreat-section-heading--narrow">
+              <span className="retreat-section-kicker">Outcomes</span>
+              <h2 id="retreat-gains-title">What You Will Gain</h2>
+            </div>
+            <div className="retreat-gain-grid">
+              {retreatGainItems.map((item) => (
+                <article className="retreat-gain-card" key={item.title}>
+                  <span className="retreat-gain-card__label">{item.label}</span>
+                  <h3>{item.title}</h3>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="retreat-section retreat-section--band"
+          aria-labelledby="retreat-for-title"
+        >
+          <div className="retreat-shell">
+            <div className="retreat-section-heading retreat-section-heading--wide">
+              <span className="retreat-section-kicker">For Whom</span>
+              <h2 id="retreat-for-title">Who This Retreat Is For</h2>
+              <p>
+                This experience may be especially valuable if you are looking for
+                space, reflection, and a deeper connection with yourself.
+              </p>
+            </div>
+            <div className="retreat-check-grid retreat-check-grid--simple">
+              {retreatForItems.map((item) => (
+                <div className="retreat-check-item" key={item}>
+                  <span className="retreat-check-marker" aria-hidden="true" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="retreat-section" aria-labelledby="retreat-upcoming-title">
+          <div className="retreat-shell">
+            <div className="retreat-section-heading retreat-section-heading--wide">
+              <span className="retreat-section-kicker">Upcoming Retreat</span>
+              <h2 id="retreat-upcoming-title">Upcoming Retreat</h2>
+              <p>
+                A calm, small-group retreat format is being prepared. Details for the
+                next edition will be added here when confirmed.
+              </p>
+            </div>
+            <div className="retreat-upcoming-card">
+              <div className="retreat-upcoming-card__content">
+                <div className="retreat-info-grid">
+                  {upcomingRetreatInfo.map((item) => (
+                    <article className="retreat-info-item" key={item.label}>
+                      <span className="retreat-info-item__label">{item.label}</span>
+                      <h3>{item.value}</h3>
+                    </article>
+                  ))}
+                </div>
+                <div className="retreat-upcoming-card__actions">
+                  <button
+                    className="questionnaire-primary-button"
+                    type="button"
+                    onClick={scrollToRetreatRegistration}
+                  >
+                    Register
+                  </button>
+                  <button
+                    className="questionnaire-secondary-button"
+                    type="button"
+                    onClick={() => scrollToSection("retreat-overview")}
+                  >
+                    Learn More
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="retreat-section retreat-section--soft"
+          id="retreat-registration"
+          aria-labelledby="retreat-registration-title"
+        >
+          <div className="retreat-shell">
+            <div className="retreat-section-heading retreat-section-heading--full">
+              <span className="retreat-section-kicker">Registration</span>
+              <h2 id="retreat-registration-title">How Registration Works</h2>
+              <p>
+                Choose your preferred retreat and complete a short registration form.
+                Share what question, topic, or expectation you are bringing with you.
+              </p>
+              <p className="retreat-registration-note">
+                Places are limited to preserve a small-group and more personal
+                experience.
+              </p>
+            </div>
+
+            <div className="retreat-form-card">
+              <form className="retreat-form" onSubmit={handleRetreatSubmit}>
+                <div className="retreat-form-grid retreat-form-grid--two">
+                  <div className="retreat-field">
+                    <label htmlFor="retreat-full-name">Full name</label>
+                    <input
+                      id="retreat-full-name"
+                      name="fullName"
+                      type="text"
+                      required
+                      placeholder="Your full name"
+                      value={retreatFormValues.fullName}
+                      onChange={(event) =>
+                        handleRetreatFieldChange("fullName", event.target.value)
+                      }
+                    />
+                  </div>
+
+                  <div className="retreat-field">
+                    <label htmlFor="retreat-email">Email</label>
+                    <input
+                      id="retreat-email"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="your@email.com"
+                      value={retreatFormValues.email}
+                      onChange={(event) =>
+                        handleRetreatFieldChange("email", event.target.value)
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="retreat-form-grid retreat-form-grid--two">
+                  <div className="retreat-field">
+                    <label htmlFor="retreat-phone">Phone number</label>
+                    <input
+                      id="retreat-phone"
+                      name="phone"
+                      type="tel"
+                      placeholder="Your phone number"
+                      value={retreatFormValues.phone}
+                      onChange={(event) =>
+                        handleRetreatFieldChange("phone", event.target.value)
+                      }
+                    />
+                  </div>
+
+                  <div className="retreat-field">
+                    <label htmlFor="retreat-purpose">Purpose of participation</label>
+                    <select
+                      id="retreat-purpose"
+                      name="purpose"
+                      required
+                      value={retreatFormValues.purpose}
+                      onChange={(event) =>
+                        handleRetreatFieldChange("purpose", event.target.value)
+                      }
+                    >
+                      {retreatPurposeOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="retreat-form-grid">
+                  <div className="retreat-field">
+                    <label htmlFor="retreat-expectations">
+                      Special expectations or wishes
+                    </label>
+                    <textarea
+                      id="retreat-expectations"
+                      name="expectations"
+                      rows={5}
+                      placeholder="Write any expectations, needs, or wishes for the retreat experience."
+                      value={retreatFormValues.expectations}
+                      onChange={(event) =>
+                        handleRetreatFieldChange("expectations", event.target.value)
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="retreat-form-grid">
+                  <div className="retreat-field">
+                    <label htmlFor="retreat-description">
+                      Short description - what question or topic are you bringing with
+                      you?
+                    </label>
+                    <textarea
+                      id="retreat-description"
+                      name="description"
+                      required
+                      rows={6}
+                      placeholder="Write a few sentences about what you would like to explore, understand, or clarify during the retreat."
+                      value={retreatFormValues.description}
+                      onChange={(event) =>
+                        handleRetreatFieldChange("description", event.target.value)
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="retreat-form__footer">
+                  <button className="questionnaire-primary-button" type="submit">
+                    Register for Retreat
+                  </button>
+                </div>
+
+                {retreatSubmitted ? (
+                  <p className="retreat-success-message" role="status" aria-live="polite">
+                    Thank you. Your retreat registration request has been prepared. I
+                    will contact you with more details when retreat dates are
+                    confirmed.
+                  </p>
+                ) : null}
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section className="retreat-final-cta" aria-labelledby="retreat-cta-title">
+          <div className="retreat-shell">
+            <div className="retreat-final-card">
+              <h2 id="retreat-cta-title">Begin With Reflection</h2>
+              <p>
+                If you are not sure whether a retreat is the right next step, begin
+                with the Dream Code Map Questionnaire. It can help you reflect on your
+                interests, motivations, strengths, blocks, and possible direction.
+              </p>
+              <div className="retreat-hero__actions retreat-hero__actions--center">
+                <button
+                  className="questionnaire-primary-button"
+                  type="button"
+                  onClick={() => navigateTo(questionnaireRoute)}
+                >
+                  Take the Questionnaire
+                </button>
+                <button
+                  className="questionnaire-secondary-button"
+                  type="button"
+                  onClick={() => navigateTo(withBase(""))}
+                >
+                  Back to Home
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {renderFooter()}
+      </main>
+    );
+  }
+
   if (isContactPage) {
     return (
       <main className="page-shell">
@@ -1871,14 +2397,18 @@ function App() {
               />
               <span className="journey-step-card__label">Lectures</span>
             </button>
-            <div className="journey-step-card">
+            <button
+              className="journey-step-card"
+              type="button"
+              onClick={() => navigateTo(retreatRoute)}
+            >
               <img
                 className="journey-step-card__icon"
                 src={withBase("images/home_images/retreat_image.png")}
                 alt="Retreat"
               />
               <span className="journey-step-card__label">Retreat</span>
-            </div>
+            </button>
           </div>
         </div>
       </section>
